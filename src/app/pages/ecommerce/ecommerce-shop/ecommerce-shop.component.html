@@ -1,0 +1,49 @@
+<div class="container">
+  <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="position">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>
+        Position
+      </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element">
+        {{ element.position }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>
+        Valor
+      </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element">
+        {{ element.name }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>
+        Valor
+      </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element">
+        {{ element.price | currency: "BRL" }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>
+        Quantidade
+      </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let element">
+        {{ element.quant }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      matRipple
+      *matRowDef="let row; columns: displayedColumns"
+    ></mat-row>
+  </mat-table>
+
+  <!-- Copyright 2022 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at https://angular.io/license -->
+</div>
