@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { EcommerceServiceService } from '../ecommerce-service.service';
+import { EcommerceService } from '../ecommerce.service';
 import { ProductModel } from '../product-model';
 
 @Component({
@@ -18,7 +18,7 @@ export class EcommerceShopComponent implements OnInit {
   //   this.dataSource.paginator = this.paginator;
   // }
 
-  constructor(private readonly _productService: EcommerceServiceService) {}
+  constructor(private readonly _productService: EcommerceService) {}
 
   ngOnInit(): void {
     this.dataSource = this._productService.getAllProductAsync();
