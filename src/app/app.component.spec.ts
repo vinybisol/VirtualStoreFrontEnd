@@ -16,9 +16,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'VirtualStoreFrontEnd'`, () => {
+  it(`should have as title 'Lojinha na Web'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('VirtualStoreFrontEnd');
+    expect(app.title).toEqual('Lojinha na Web');
   });
 });

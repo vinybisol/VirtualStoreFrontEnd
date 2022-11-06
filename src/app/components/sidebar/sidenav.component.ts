@@ -1,4 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { menuNavbarData } from './menu-data';
+
+interface SideNavToggle {
+  screenWidth: number;
+  collapsed: boolean;
+}
 
 @Component({
   selector: 'app-sidenav',
@@ -6,7 +12,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.scss'],
 })
 export class SidenavComponent implements OnInit {
-  @Input() content: any;
+  @Input() collapsed: boolean = true;
+
+  public screenWidth: number = 0;
+  navData = menuNavbarData;
   constructor() {}
 
   ngOnInit(): void {}

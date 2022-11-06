@@ -1,7 +1,6 @@
-<mat-toolbar color="primary">
-  <span>Lojinha na Web</span>
-</mat-toolbar>
-<app-sidenav></app-sidenav>
+<title>{{ title }}</title>
+<app-header (onToggleSideNav)="toggleCollapse()"></app-header>
+<app-sidenav [collapsed]="collapsed"></app-sidenav>
 
 <!-- https://www.youtube.com/watch?v=8_Pm-aeQozA
 https://github.com/Angular-istic/sidenav/blob/main/src/app/app.component.html -->
