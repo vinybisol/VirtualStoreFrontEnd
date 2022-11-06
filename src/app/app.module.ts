@@ -8,6 +8,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidebar/sidenav.component';
 import { PagesModule } from './pages/pages.module';
 import { AppMaterialModule } from './shared/app-material/app-material.module';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent, SidenavComponent, HeaderComponent],
@@ -17,6 +20,8 @@ import { AppMaterialModule } from './shared/app-material/app-material.module';
     BrowserAnimationsModule,
     AppMaterialModule,
     PagesModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
   ],
   providers: [],
   bootstrap: [AppComponent],

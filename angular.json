@@ -102,6 +102,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "VirtualStoreFrontEnd:build:production",
+            "firebaseProject": "planar-granite-317805",
+            "firebaseHostingSite": "planar-granite-317805"
+          }
         }
       }
     }
