@@ -1,14 +1,5 @@
 {
   "projects": {
-    "default": "planar-granite-317805"
-  },
-  "targets": {
-    "planar-granite-317805": {
-      "hosting": {
-        "VirtualStoreFrontEnd": [
-          "planar-granite-317805"
-        ]
-      }
-    }
+    "default": "lojinha-na-web"
   }
 }

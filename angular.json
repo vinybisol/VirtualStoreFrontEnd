@@ -96,21 +96,11 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "prerender": false,
-            "ssr": false,
-            "browserTarget": "VirtualStoreFrontEnd:build:production",
-            "firebaseProject": "planar-granite-317805",
-            "firebaseHostingSite": "planar-granite-317805"
-          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "37fbf540-e326-40a8-877b-91984273d7aa"
+    "analytics": "8e603ca2-4100-4952-807e-d51f93ada424"
   }
 }

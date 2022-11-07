@@ -11,9 +11,10 @@ import { AppMaterialModule } from './shared/app-material/app-material.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { BodyComponent } from './components/body/body.component';
 
 @NgModule({
-  declarations: [AppComponent, SidenavComponent, HeaderComponent],
+  declarations: [AppComponent, SidenavComponent, HeaderComponent, BodyComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -11,7 +11,10 @@ export class HeaderComponent implements OnInit {
     new EventEmitter();
   public screenWidth: number = 0;
   public collapsed: boolean = true;
-  title = 'Lojinha na Web';
+  public title = 'Lojinha na Web';
+  private facebookPage: string = 'https://www.facebook.com/akuwer1/';
+  private instagramPage: string = 'https://www.instagram.com/akuwer/';
+  private sharePage: string = 'http://google.com';
   constructor() {}
 
   ngOnInit(): void {}
@@ -22,5 +25,14 @@ export class HeaderComponent implements OnInit {
       collapsed: this.collapsed,
       screenWidth: this.screenWidth,
     });
+  }
+  gotoShare(): void {
+    window.open(this.sharePage, '_blank');
+  }
+  gotoFacebook(): void {
+    window.open(this.facebookPage, '_blank');
+  }
+  gotoInstagran(): void {
+    window.open(this.instagramPage, '_blank');
   }
 }
