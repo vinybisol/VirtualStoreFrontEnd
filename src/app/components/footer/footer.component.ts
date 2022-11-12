@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EcommerceService } from 'src/app/pages/ecommerce/ecommerce.service';
+import { CartShoppingModel } from 'src/app/pages/ecommerce/model/cart-shopping-model';
 
 @Component({
   selector: 'app-footer',
@@ -7,15 +8,15 @@ import { EcommerceService } from 'src/app/pages/ecommerce/ecommerce.service';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  public total: number = 0;
+  public cart: CartShoppingModel = new CartShoppingModel();
   constructor(private readonly _ecommerceService: EcommerceService) {}
 
   ngOnInit(): void {
-    this._ecommerceService.getCartShoppingTotal().subscribe({
+    this._ecommerceService.getCartShopping().subscribe({
       next: (data) => {
         console.log(data);
 
-        return (this.total = data);
+        return (this.cart = data);
       },
     });
   }

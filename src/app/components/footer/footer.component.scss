@@ -1,8 +1,80 @@
+.container {
+  justify-content: center;
+  display: flex;
+}
 .ecommerce-footer {
-  background-color: beige;
-  height: 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  bottom: 0;
 }
 
-.ecommerce-footer-lorem {
+.ecommerce-footer-content {
+  background-color: beige;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+@media only screen and (min-width: 600px) {
+  .ecommerce-footer-content {
+    display: flex;
+  }
+  .ecommerce-footer {
+    position: fixed;
+  }
+}
+.ecommerce-footer-text {
+  border-bottom: none;
+  margin: 0;
+  padding: 24px 24px 24px 16px;
+  width: 40%;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ecommerce-row-detail {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 24px;
+  align-items: center;
+  display: flex;
+}
+
+.ecommerce-button {
+  padding-right: 16px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.slideInUp {
+  -webkit-animation-name: slideInUp;
+  animation-name: slideInUp;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes slideInUp {
+  0% {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes slideInUp {
+  0% {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
 }

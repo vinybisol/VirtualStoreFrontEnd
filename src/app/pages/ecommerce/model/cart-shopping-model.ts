@@ -2,7 +2,6 @@ import { ProductModel } from './product-model';
 
 export class CartShoppingModel {
   protected total: number = 0;
-  protected qtItens: number = 0;
   protected productModel: ProductModel[] = [];
 
   public addProductInCart(productModel: ProductModel): void {
@@ -11,6 +10,13 @@ export class CartShoppingModel {
   }
   public getTotal(): number {
     return this.total;
+  }
+  public qtItens(): number {
+    return this.productModel.length;
+  }
+  public getLastAddProduct(): string {
+    const index = this.productModel.length - 1;
+    return this.productModel[index].fullName;
   }
   clearCartShooping(): void {
     this.productModel = [];

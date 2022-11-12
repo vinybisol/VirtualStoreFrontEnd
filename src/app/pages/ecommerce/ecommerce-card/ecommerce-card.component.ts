@@ -40,12 +40,12 @@ export class EcommerceCardComponent implements OnInit {
   addInCartShopping(product: ProductModel): void {
     product.inCart = true;
     this.cartShopping.addProductInCart(product);
-    this._ecommerceService.sendCartShoppingTotal(this.cartShopping.getTotal());
+    this._ecommerceService.sendCartShopping(this.cartShopping);
   }
   clearCartShopping() {
     console.log('passei aqui');
     this.cartShopping.clearCartShooping();
-    this._ecommerceService.sendCartShoppingTotal(this.cartShopping.getTotal());
+    this._ecommerceService.sendCartShopping(this.cartShopping);
     this.products.map((prod) => (prod.inCart = false));
   }
 }
