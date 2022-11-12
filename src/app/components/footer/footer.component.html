@@ -1,0 +1,17 @@
+<div class="ecommerce-footer">
+  <div class="ecommerce-footer-lorem">
+    <p>Aqui vai ficar o carrinho</p>
+    <div *ngIf="total > 0">
+      <p>o total é {{ total }}</p>
+    </div>
+    <div>
+      <button
+        mat-icon-button
+        aria-label="Example icon-button with menu icon"
+        (click)="clearCartShopping()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

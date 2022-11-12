@@ -12,9 +12,10 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { BodyComponent } from './components/body/body.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, SidenavComponent, HeaderComponent, BodyComponent],
+  declarations: [AppComponent, SidenavComponent, HeaderComponent, BodyComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -27,7 +27,14 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-raised-button color="primary">Comprar</button>
+        <button
+          mat-raised-button
+          [disabled]="product.inCart"
+          (click)="addInCartShopping(product)"
+          color="primary"
+        >
+          {{ product.inCart ? "No Carrinho" : "Comprar" }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </mat-grid-tile>

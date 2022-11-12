@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { EcommerceService } from '../ecommerce.service';
-import { ProductModel } from '../product-model';
+import { ProductModel } from '../model/product-model';
 
 @Component({
   selector: 'app-ecommerce-shop',

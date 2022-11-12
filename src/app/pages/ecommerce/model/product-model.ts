@@ -7,6 +7,7 @@ export class ProductModel {
     public marketPrice: number,
     public quant: number,
     public description: string,
-    public obs: string
+    public obs: string,
+    public inCart: boolean
   ) {}
 }
