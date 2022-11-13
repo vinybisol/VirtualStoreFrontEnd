@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
 import { ProductModel } from '../model/product-model';
@@ -11,12 +11,14 @@ import { ProductModel } from '../model/product-model';
 })
 export class EcommerceCardComponent implements OnInit {
   public total$: Subject<number> = new Subject<number>();
-  public products: Observable<ProductModel[]>;
+  public products: ProductModel[] = [];
   private cartShopping: CartShoppingModel = new CartShoppingModel();
   public breakpoint: number = 0;
 
   constructor(private readonly _ecommerceService: EcommerceService) {
-    this.products = this._ecommerceService.getAllProductAsync();
+    this._ecommerceService
+      .getAllProductAsync()
+      .subscribe({ next: (data) => (this.products = data) });
   }
 
   ngOnInit(): void {
@@ -46,6 +48,10 @@ export class EcommerceCardComponent implements OnInit {
   clearCartShopping() {
     this.cartShopping.clearCartShooping();
     this._ecommerceService.sendCartShopping(this.cartShopping);
-    this.products.forEach((data) => data.map((m) => (m.inCart = false)));
+    this.products.map((m) => (m.inCart = false));
+  }
+
+  ngOnDestroy(): void {
+    this.total$.unsubscribe();
   }
 }
