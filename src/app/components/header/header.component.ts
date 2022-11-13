@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggleInterface> =
     new EventEmitter();
   public screenWidth: number = 0;
-  public collapsed: boolean = true;
+  public collapsed: boolean = false;
   public title = 'Lojinha na Web';
   private facebookPage: string = 'https://www.facebook.com/akuwer1/';
   private instagramPage: string = 'https://www.instagram.com/akuwer/';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
 import { ProductModel } from '../model/product-model';
@@ -11,14 +11,15 @@ import { ProductModel } from '../model/product-model';
 })
 export class EcommerceCardComponent implements OnInit {
   public total$: Subject<number> = new Subject<number>();
-  public products: ProductModel[] = [];
+  public products: Observable<ProductModel[]>;
   private cartShopping: CartShoppingModel = new CartShoppingModel();
   public breakpoint: number = 0;
 
-  constructor(private readonly _ecommerceService: EcommerceService) {}
+  constructor(private readonly _ecommerceService: EcommerceService) {
+    this.products = this._ecommerceService.getAllProductAsync();
+  }
 
   ngOnInit(): void {
-    this.products = this._ecommerceService.getAllProductAsync();
     this.breakpoint = this.perPage(window.innerWidth);
     this.total$.next(100);
     this._ecommerceService.getClearCartShoppingTotal().subscribe({
@@ -43,9 +44,8 @@ export class EcommerceCardComponent implements OnInit {
     this._ecommerceService.sendCartShopping(this.cartShopping);
   }
   clearCartShopping() {
-    console.log('passei aqui');
     this.cartShopping.clearCartShooping();
     this._ecommerceService.sendCartShopping(this.cartShopping);
-    this.products.map((prod) => (prod.inCart = false));
+    this.products.forEach((data) => data.map((m) => (m.inCart = false)));
   }
 }

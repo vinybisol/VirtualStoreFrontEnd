@@ -3,7 +3,7 @@
     [ngClass]="collapsed ? 'sidenav-collapsed' : ''"
     class="example-container"
   >
-    <mat-drawer mode="side" [opened]="collapsed">
+    <mat-drawer mode="side" [opened]="!collapsed">
       <mat-nav-list>
         <a
           *ngFor="let nav of navData"

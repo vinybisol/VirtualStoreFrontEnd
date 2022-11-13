@@ -1,11 +1,11 @@
-<app-ecommerce-header></app-ecommerce-header
-><mat-grid-list
+<app-ecommerce-header></app-ecommerce-header>
+<mat-grid-list
   class="container"
   [cols]="breakpoint"
   rowHeight="450px"
   (window:resize)="onResize($event)"
 >
-  <mat-grid-tile *ngFor="let product of products">
+  <mat-grid-tile *ngFor="let product of products | async">
     <mat-card class="example-card">
       <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
       <mat-card-subtitle>{{ product.fullName }}</mat-card-subtitle>

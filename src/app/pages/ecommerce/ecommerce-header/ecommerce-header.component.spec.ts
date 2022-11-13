@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EcommerceHeaderComponent } from './ecommerce-header.component';
@@ -8,9 +9,9 @@ describe('EcommerceHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EcommerceHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [EcommerceHeaderComponent],
+      imports: [HttpClientTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EcommerceHeaderComponent);
     component = fixture.componentInstance;
