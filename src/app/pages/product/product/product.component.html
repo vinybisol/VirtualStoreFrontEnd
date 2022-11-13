@@ -1,0 +1,11 @@
+<div *ngIf="products$ | async as product">
+  <app-product-list
+    [products]="product"
+    (outputProduct)="editProduct($event)"
+  ></app-product-list>
+</div>
+<div class="add-button-container">
+  <button mat-fab color="primary" (click)="gotoAdd()" aria-label="add button">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

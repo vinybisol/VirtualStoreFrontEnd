@@ -4,4 +4,9 @@ export const menuNavbarData = [
     icon: 'fal fa-box-open',
     label: 'Grid',
   },
+  {
+    routeLink: 'product',
+    icon: 'fal fa-box-open',
+    label: 'Produtos',
+  },
 ];
