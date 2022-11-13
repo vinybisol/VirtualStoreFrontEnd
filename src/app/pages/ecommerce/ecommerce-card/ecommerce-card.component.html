@@ -1,4 +1,5 @@
-<mat-grid-list
+<app-ecommerce-header></app-ecommerce-header
+><mat-grid-list
   class="container"
   [cols]="breakpoint"
   rowHeight="450px"
@@ -6,7 +7,7 @@
 >
   <mat-grid-tile *ngFor="let product of products">
     <mat-card class="example-card">
-      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
       <mat-card-subtitle>{{ product.fullName }}</mat-card-subtitle>
 
       <img

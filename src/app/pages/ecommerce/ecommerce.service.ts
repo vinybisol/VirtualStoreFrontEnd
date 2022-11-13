@@ -16,7 +16,7 @@ export class EcommerceService {
       {
         position: 1,
         fullName: 'Roteador Completo',
-        name: 'Roteador',
+        name: 'Roteador Roteador Roteador Roteador',
         price: 1.0,
         marketPrice: 2,
         quant: 1,
