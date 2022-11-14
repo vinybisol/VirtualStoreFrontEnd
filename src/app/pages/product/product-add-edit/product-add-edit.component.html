@@ -67,17 +67,53 @@
     <mat-label>Preço</mat-label>
     <input
       type="number"
+      lang="pt-br"
       matInput
-      maxlength="6"
       [formControl]="priceFormControl"
-      [value]="priceFormControl.value | number: '1.2-2'"
       [errorStateMatcher]="matcher"
       placeholder="Ex. R$ 10,00"
     />
     <mat-error *ngIf="emailFormControl.errors">
-      Preço é <strong>obrigátorio</strong>, Insira de 0,01 a 9999,00 caracteres
+      Preço é <strong>obrigátorio</strong>, Insira de 0,01 a 9999,99 caracteres
     </mat-error>
   </mat-form-field>
+
+  <!-- Preço Mercado-->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Preço de mercado</mat-label>
+    <input
+      type="number"
+      lang="pt-br"
+      matInput
+      [formControl]="priceMarketFormControl"
+      [errorStateMatcher]="matcher"
+      placeholder="Ex. R$ 10,00"
+    />
+    <mat-error *ngIf="emailFormControl.errors">
+      Insira de 0,01 a 9999,99 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Quantidade -->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Quantidade</mat-label>
+    <input
+      type="number"
+      lang="pt-br"
+      matInput
+      [formControl]="quantityFormControl"
+      [errorStateMatcher]="matcher"
+      placeholder="Ex. 10"
+    />
+    <mat-error *ngIf="emailFormControl.errors">
+      Quantidade é <strong>obrigátorio</strong>, Insira de 1 a 9999 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Quantidade -->
+
+  <mat-label>Quantidade</mat-label>
+  <input type="file" lang="pt-br" placeholder="Ex. 10" />
 </form>
 
 <div class="back-button-container">
