@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProductAddEditComponent } from './product-add-edit.component';
 
@@ -8,9 +9,9 @@ describe('ProductAddEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProductAddEditComponent ]
-    })
-    .compileComponents();
+      declarations: [ProductAddEditComponent],
+      imports: [ReactiveFormsModule, FormsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProductAddEditComponent);
     component = fixture.componentInstance;

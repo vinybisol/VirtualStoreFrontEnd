@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { EcommerceCardComponent } from './ecommerce/ecommerce-card/ecommerce-card.component';
 import { EcommerceHeaderComponent } from './ecommerce/ecommerce-header/ecommerce-header.component';
@@ -24,7 +23,6 @@ import { ProductComponent } from './product/product/product.component';
   imports: [
     CommonModule,
     PagesRoutingModule,
-    AppMaterialModule,
     SharedModule,
     ReactiveFormsModule,
   ],
