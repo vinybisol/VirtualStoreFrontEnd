@@ -1,21 +1,81 @@
-<form [formGroup]="productForm" class="form">
+<form class="example-form">
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Email</mat-label>
     <input
       type="email"
       matInput
-      formControlName="email"
+      [formControl]="emailFormControl"
       [errorStateMatcher]="matcher"
       placeholder="Ex. pat@example.com"
     />
-    <mat-hint>Errors appear instantly!</mat-hint>
     <mat-error
-      *ngIf="productForm.hasError('email') && !productForm.hasError('required')"
+      *ngIf="
+        emailFormControl.hasError('email') &&
+        !emailFormControl.hasError('required')
+      "
     >
       Please enter a valid email address
     </mat-error>
-    <mat-error *ngIf="productForm.hasError('required')">
+    <mat-error *ngIf="emailFormControl.hasError('required')">
       Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Nome Curto -->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Nome Curto</mat-label>
+    <input
+      type="text"
+      matInput
+      maxlength="20"
+      [formControl]="shortNameFormControl"
+      [errorStateMatcher]="matcher"
+      placeholder="Ex. Roteador"
+    />
+    <mat-error
+      *ngIf="
+        emailFormControl.hasError('required') &&
+        emailFormControl.hasError('maxLength') &&
+        emailFormControl.hasError('minLength')
+      "
+    >
+      Insira de 3 a 20 caracteres
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Nome é <strong>obrigátorio</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Nome-->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input
+      type="text"
+      matInput
+      maxlength="20"
+      [formControl]="nameFormControl"
+      [errorStateMatcher]="matcher"
+      placeholder="Ex. Roteador"
+    />
+    <mat-error *ngIf="emailFormControl.errors">
+      Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Preço-->
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Preço</mat-label>
+    <input
+      type="number"
+      matInput
+      maxlength="6"
+      [formControl]="priceFormControl"
+      [value]="priceFormControl.value | number: '1.2-2'"
+      [errorStateMatcher]="matcher"
+      placeholder="Ex. R$ 10,00"
+    />
+    <mat-error *ngIf="emailFormControl.errors">
+      Preço é <strong>obrigátorio</strong>, Insira de 0,01 a 9999,00 caracteres
     </mat-error>
   </mat-form-field>
 </form>
