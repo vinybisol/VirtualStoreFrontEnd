@@ -29,11 +29,20 @@ export class ProductAddEditComponent implements OnInit {
     Validators.maxLength(20),
     Validators.minLength(3),
   ]);
-  priceFormControl = new FormControl('', [Validators.required]);
-  priceMarketFormControl = new FormControl('', [
+  priceFormControl = new FormControl('', [
     Validators.required,
-    Validators.maxLength(20),
-    Validators.minLength(3),
+    Validators.pattern('(^\\d*.?\\d{0,2}$)'),
+  ]);
+  priceMarketFormControl = new FormControl('', [
+    Validators.pattern('(^\\d*.?\\d{0,2}$)'),
+  ]);
+  quantityFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('(^\\d*)'),
+  ]);
+  imageFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern('(^\\d*)'),
   ]);
 
   matcher = new MyErrorStateMatcher();
