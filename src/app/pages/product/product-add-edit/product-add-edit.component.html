@@ -1,26 +1,4 @@
 <form class="example-form">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Email</mat-label>
-    <input
-      type="email"
-      matInput
-      [formControl]="emailFormControl"
-      [errorStateMatcher]="matcher"
-      placeholder="Ex. pat@example.com"
-    />
-    <mat-error
-      *ngIf="
-        emailFormControl.hasError('email') &&
-        !emailFormControl.hasError('required')
-      "
-    >
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-
   <!-- Nome Curto -->
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Nome Curto</mat-label>
@@ -34,14 +12,14 @@
     />
     <mat-error
       *ngIf="
-        emailFormControl.hasError('required') &&
-        emailFormControl.hasError('maxLength') &&
-        emailFormControl.hasError('minLength')
+        shortNameFormControl.hasError('required') &&
+        shortNameFormControl.hasError('maxLength') &&
+        shortNameFormControl.hasError('minLength')
       "
     >
       Insira de 3 a 20 caracteres
     </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
+    <mat-error *ngIf="shortNameFormControl.hasError('required')">
       Nome é <strong>obrigátorio</strong>
     </mat-error>
   </mat-form-field>
@@ -55,9 +33,9 @@
       maxlength="20"
       [formControl]="nameFormControl"
       [errorStateMatcher]="matcher"
-      placeholder="Ex. Roteador"
+      placeholder="Ex. Roteador Wireless"
     />
-    <mat-error *ngIf="emailFormControl.errors">
+    <mat-error *ngIf="nameFormControl.errors">
       Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
     </mat-error>
   </mat-form-field>
@@ -73,7 +51,7 @@
       [errorStateMatcher]="matcher"
       placeholder="Ex. R$ 10,00"
     />
-    <mat-error *ngIf="emailFormControl.errors">
+    <mat-error *ngIf="priceFormControl.errors">
       Preço é <strong>obrigátorio</strong>, Insira de 0,01 a 9999,99 caracteres
     </mat-error>
   </mat-form-field>
@@ -89,31 +67,75 @@
       [errorStateMatcher]="matcher"
       placeholder="Ex. R$ 10,00"
     />
-    <mat-error *ngIf="emailFormControl.errors">
+    <mat-error *ngIf="priceMarketFormControl.errors">
       Insira de 0,01 a 9999,99 caracteres
     </mat-error>
   </mat-form-field>
 
-  <!-- Quantidade -->
+  <!-- Note -->
   <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Quantidade</mat-label>
+    <mat-label>Observação</mat-label>
     <input
-      type="number"
+      type="text"
       lang="pt-br"
       matInput
-      [formControl]="quantityFormControl"
+      [formControl]="noteFormControl"
       [errorStateMatcher]="matcher"
-      placeholder="Ex. 10"
+      placeholder="Ex. Venda com o conjunto"
     />
-    <mat-error *ngIf="emailFormControl.errors">
+    <mat-error *ngIf="noteFormControl.errors">
       Quantidade é <strong>obrigátorio</strong>, Insira de 1 a 9999 caracteres
     </mat-error>
   </mat-form-field>
 
-  <!-- Quantidade -->
+  <!-- Upload Imagem -->
 
-  <mat-label>Quantidade</mat-label>
-  <input type="file" capture="environment" lang="pt-br" placeholder="Ex. 10" />
+  <div class="upload-imagem">
+    <div>
+      <h4>Upload de imagem 1</h4>
+      <input
+        [formControl]="imageFormControl1"
+        type="file"
+        capture="environment"
+        accept="image/*"
+      />
+      <mat-error *ngIf="imageFormControl1.errors">
+        uma imagem é <strong>obrigátoria</strong>
+      </mat-error>
+    </div>
+
+    <div>
+      <h4>Upload de imagem 2</h4>
+      <input [formControl]="imageFormControl2" type="file" accept="image/*" />
+    </div>
+    <h4>Upload de imagem 3</h4>
+    <div>
+      <input
+        [formControl]="imageFormControl3"
+        type="file"
+        capture="user"
+        accept="image/*"
+      />
+    </div>
+    <h4>Upload de imagem 4</h4>
+    <div>
+      <input
+        [formControl]="imageFormControl4"
+        type="file"
+        capture="environment"
+        accept="image/*"
+      />
+    </div>
+    <h4>Upload de imagem 5</h4>
+    <div>
+      <input
+        [formControl]="imageFormControl5"
+        type="file"
+        capture="environment/user"
+        accept="image/*"
+      />
+    </div>
+  </div>
 </form>
 
 <div class="back-button-container">
