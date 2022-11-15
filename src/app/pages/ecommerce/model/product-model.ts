@@ -1,6 +1,6 @@
 export class ProductModel {
   constructor(
-    public id: number,
+    public id: string,
     public name: string,
     public shortName: string,
     public price: number,
@@ -14,5 +14,5 @@ export class ProductModel {
     public image4: [],
     public image5: []
   ) {}
-  public imageTest: string | ArrayBuffer | null = '';
+  public imageTest: any;
 }
