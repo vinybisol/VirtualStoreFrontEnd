@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
+  FormGroup,
   FormGroupDirective,
   NgForm,
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { ProductModel } from '../../ecommerce/model/product-model';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product-add-edit',
@@ -14,39 +18,99 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-add-edit.component.scss'],
 })
 export class ProductAddEditComponent implements OnInit {
-  shortNameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(20),
-    Validators.minLength(3),
-  ]);
-  nameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(20),
-    Validators.minLength(3),
-  ]);
-  priceFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern('(^\\d*.?\\d{0,2}$)'),
-  ]);
-  priceMarketFormControl = new FormControl('', [
-    Validators.pattern('(^\\d*.?\\d{0,2}$)'),
-  ]);
-  noteFormControl = new FormControl('', [
-    Validators.required,
-    Validators.maxLength(100),
-  ]);
-  imageFormControl1 = new FormControl('', [Validators.required]);
-  imageFormControl2 = new FormControl('', []);
-  imageFormControl3 = new FormControl('', []);
-  imageFormControl4 = new FormControl('', []);
-  imageFormControl5 = new FormControl('', []);
+  form: FormGroup;
+  product: ProductModel = new ProductModel(
+    0,
+    '',
+    '',
+    0,
+    0,
+    '',
+    '',
+    false,
+    [],
+    [],
+    [],
+    [],
+    []
+  );
+  loading: boolean = false;
 
   matcher = new MyErrorStateMatcher();
-  constructor(private readonly _router: Router) {}
+  constructor(
+    private readonly _router: Router,
+    private readonly _formBuilder: FormBuilder,
+    private readonly _productService: ProductService
+  ) {
+    this.form = this._formBuilder.group({
+      shortName: [
+        this.product.shortName,
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.minLength(3),
+        ],
+      ],
+      name: [
+        this.product.name,
+        [
+          Validators.required,
+          Validators.maxLength(20),
+          Validators.minLength(3),
+        ],
+      ],
+
+      price: [
+        this.product.price,
+        [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
+      ],
+      priceMarket: [
+        this.product.priceMarket,
+        [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
+      ],
+      note: [this.product.note, []],
+      image1: ['', []],
+      imageFormControl2: ['', []],
+      imageFormControl3: ['', []],
+      imageFormControl4: ['', []],
+      imageFormControl5: ['', []],
+    });
+  }
 
   ngOnInit(): void {}
   goBack(): void {
     this._router.navigate(['product']);
+  }
+  save() {
+    this._productService.store(this.product).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+    let image: any;
+    if (typeof FileReader !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        image = e.target.result;
+        this.product.imageTest = new Uint8Array(image);
+        console.log('denovo', image);
+      };
+
+      reader.readAsArrayBuffer(inputNode.files[0]);
+      console.log(reader);
+      console.log(reader.result);
+      console.log('image', image);
+      console.log(this.form.controls['image1'].value);
+
+      this.product.imageTest = image;
+    }
   }
 }
 

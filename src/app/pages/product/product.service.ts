@@ -14,4 +14,7 @@ export class ProductService {
   getAllProductAsync(): Observable<ProductModel[]> {
     return this._http.get<ProductModel[]>(this.API).pipe(first());
   }
+  store(product: ProductModel): Observable<ProductModel> {
+    return this._http.post<ProductModel>(this.API, product);
+  }
 }

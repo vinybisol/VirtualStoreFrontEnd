@@ -1,4 +1,4 @@
-<form class="example-form">
+<form class="example-form" [formGroup]="form">
   <!-- Nome Curto -->
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Nome Curto</mat-label>
@@ -6,21 +6,12 @@
       type="text"
       matInput
       maxlength="20"
-      [formControl]="shortNameFormControl"
+      formControlName="shortName"
       [errorStateMatcher]="matcher"
       placeholder="Ex. Roteador"
     />
-    <mat-error
-      *ngIf="
-        shortNameFormControl.hasError('required') &&
-        shortNameFormControl.hasError('maxLength') &&
-        shortNameFormControl.hasError('minLength')
-      "
-    >
-      Insira de 3 a 20 caracteres
-    </mat-error>
-    <mat-error *ngIf="shortNameFormControl.hasError('required')">
-      Nome é <strong>obrigátorio</strong>
+    <mat-error>
+      Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
     </mat-error>
   </mat-form-field>
 
@@ -31,11 +22,11 @@
       type="text"
       matInput
       maxlength="20"
-      [formControl]="nameFormControl"
+      formControlName="name"
       [errorStateMatcher]="matcher"
       placeholder="Ex. Roteador Wireless"
     />
-    <mat-error *ngIf="nameFormControl.errors">
+    <mat-error>
       Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
     </mat-error>
   </mat-form-field>
@@ -47,11 +38,11 @@
       type="number"
       lang="pt-br"
       matInput
-      [formControl]="priceFormControl"
+      formControlName="price"
       [errorStateMatcher]="matcher"
       placeholder="Ex. R$ 10,00"
     />
-    <mat-error *ngIf="priceFormControl.errors">
+    <mat-error>
       Preço é <strong>obrigátorio</strong>, Insira de 0,01 a 9999,99 caracteres
     </mat-error>
   </mat-form-field>
@@ -63,13 +54,11 @@
       type="number"
       lang="pt-br"
       matInput
-      [formControl]="priceMarketFormControl"
+      formControlName="priceMarket"
       [errorStateMatcher]="matcher"
       placeholder="Ex. R$ 10,00"
     />
-    <mat-error *ngIf="priceMarketFormControl.errors">
-      Insira de 0,01 a 9999,99 caracteres
-    </mat-error>
+    <mat-error> Insira de 0,01 a 9999,99 caracteres </mat-error>
   </mat-form-field>
 
   <!-- Note -->
@@ -79,11 +68,11 @@
       type="text"
       lang="pt-br"
       matInput
-      [formControl]="noteFormControl"
+      formControlName="note"
       [errorStateMatcher]="matcher"
       placeholder="Ex. Venda com o conjunto"
     />
-    <mat-error *ngIf="noteFormControl.errors">
+    <mat-error>
       Quantidade é <strong>obrigátorio</strong>, Insira de 1 a 9999 caracteres
     </mat-error>
   </mat-form-field>
@@ -94,52 +83,77 @@
     <div>
       <h4>Upload de imagem 1</h4>
       <input
-        [formControl]="imageFormControl1"
+        formControlName="image1"
         type="file"
         capture="environment"
         accept="image/*"
       />
-      <mat-error *ngIf="imageFormControl1.errors">
+      <mat-error *ngIf="form.controls['image1'].hasError">
         uma imagem é <strong>obrigátoria</strong>
       </mat-error>
     </div>
 
     <div>
       <h4>Upload de imagem 2</h4>
-      <input [formControl]="imageFormControl2" type="file" accept="image/*" />
+      <input formControlName="imageFormControl2" type="file" accept="image/*" />
     </div>
     <h4>Upload de imagem 3</h4>
     <div>
-      <input
-        [formControl]="imageFormControl3"
-        type="file"
-        capture="user"
-        accept="image/*"
-      />
+      <input formControlName="imageFormControl3" type="file" accept="image/*" />
     </div>
     <h4>Upload de imagem 4</h4>
     <div>
-      <input
-        [formControl]="imageFormControl4"
-        type="file"
-        capture="environment"
-        accept="image/*"
-      />
+      <input formControlName="imageFormControl4" type="file" accept="image/*" />
     </div>
     <h4>Upload de imagem 5</h4>
     <div>
-      <input
-        [formControl]="imageFormControl5"
-        type="file"
-        capture="environment/user"
-        accept="image/*"
-      />
+      <input formControlName="imageFormControl5" type="file" accept="image/*" />
     </div>
+  </div>
+
+  <div class="upload-container">
+    <button
+      mat-fab
+      color="primary"
+      type="button"
+      mat-raised-button
+      (click)="fileInput.click()"
+    >
+      <mat-icon>arrow_upward</mat-icon>
+      <mat-icon>check</mat-icon>
+    </button>
+    <mat-label> Upload imagen 1</mat-label>
+    <input
+      hidden
+      formControlName="image1"
+      (change)="onFileSelected()"
+      #fileInput
+      type="file"
+      id="file"
+      accept="image/*"
+    />
   </div>
 </form>
 
 <div class="back-button-container">
-  <button mat-fab color="primary" (click)="goBack()" aria-label="add button">
+  <button
+    *ngIf="form.valid"
+    mat-fab
+    color="primary"
+    class="button"
+    (click)="save()"
+    aria-label="add button"
+  >
+    <mat-icon>save</mat-icon>
+  </button>
+  <br />
+  <button
+    mat-fab
+    color="primary"
+    class="button"
+    (click)="goBack()"
+    aria-label="add button"
+  >
     <mat-icon>clear</mat-icon>
   </button>
 </div>
