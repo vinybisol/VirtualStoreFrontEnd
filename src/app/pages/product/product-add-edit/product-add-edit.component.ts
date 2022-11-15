@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroupDirective,
   NgForm,
@@ -15,10 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-add-edit.component.scss'],
 })
 export class ProductAddEditComponent implements OnInit {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
   shortNameFormControl = new FormControl('', [
     Validators.required,
     Validators.maxLength(20),
@@ -36,20 +31,18 @@ export class ProductAddEditComponent implements OnInit {
   priceMarketFormControl = new FormControl('', [
     Validators.pattern('(^\\d*.?\\d{0,2}$)'),
   ]);
-  quantityFormControl = new FormControl('', [
+  noteFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('(^\\d*)'),
+    Validators.maxLength(100),
   ]);
-  imageFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern('(^\\d*)'),
-  ]);
+  imageFormControl1 = new FormControl('', [Validators.required]);
+  imageFormControl2 = new FormControl('', []);
+  imageFormControl3 = new FormControl('', []);
+  imageFormControl4 = new FormControl('', []);
+  imageFormControl5 = new FormControl('', []);
 
   matcher = new MyErrorStateMatcher();
-  constructor(
-    private readonly _router: Router,
-    private readonly _formBuilder: FormBuilder
-  ) {}
+  constructor(private readonly _router: Router) {}
 
   ngOnInit(): void {}
   goBack(): void {
@@ -64,7 +57,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     form: FormGroupDirective | NgForm | null
   ): boolean {
     const isSubmitted = form && form.submitted;
-    console.log('passei aqui');
 
     return !!(
       control &&
