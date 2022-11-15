@@ -16,7 +16,7 @@ export class CartShoppingModel {
   }
   public getLastAddProduct(): string {
     const index = this.productModel.length - 1;
-    return this.productModel[index].fullName;
+    return this.productModel[index].shortName;
   }
   clearCartShooping(): void {
     this.productModel = [];
