@@ -14,7 +14,13 @@ export class ProductService {
   getAllProductAsync(): Observable<ProductModel[]> {
     return this._http.get<ProductModel[]>(this.API).pipe(first());
   }
-  store(product: ProductModel): Observable<ProductModel> {
-    return this._http.post<ProductModel>(this.API, product);
+  store(product: ProductModel): Observable<any> {
+    const formData = new FormData();
+    product.image1 ? formData.append('files', product.image1) : null;
+    product.image2 ? formData.append('files', product.image2 as Blob) : null;
+    product.image3 ? formData.append('files', product.image3 as Blob) : null;
+    product.image4 ? formData.append('files', product.image4 as Blob) : null;
+    product.image5 ? formData.append('files', product.image5 as Blob) : null;
+    return this._http.post(this.API, formData);
   }
 }

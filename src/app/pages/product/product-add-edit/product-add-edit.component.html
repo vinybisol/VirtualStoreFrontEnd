@@ -79,38 +79,6 @@
 
   <!-- Upload Imagem -->
 
-  <div class="upload-imagem">
-    <div>
-      <h4>Upload de imagem 1</h4>
-      <input
-        formControlName="image1"
-        type="file"
-        capture="environment"
-        accept="image/*"
-      />
-      <mat-error *ngIf="form.controls['image1'].hasError">
-        uma imagem é <strong>obrigátoria</strong>
-      </mat-error>
-    </div>
-
-    <div>
-      <h4>Upload de imagem 2</h4>
-      <input formControlName="imageFormControl2" type="file" accept="image/*" />
-    </div>
-    <h4>Upload de imagem 3</h4>
-    <div>
-      <input formControlName="imageFormControl3" type="file" accept="image/*" />
-    </div>
-    <h4>Upload de imagem 4</h4>
-    <div>
-      <input formControlName="imageFormControl4" type="file" accept="image/*" />
-    </div>
-    <h4>Upload de imagem 5</h4>
-    <div>
-      <input formControlName="imageFormControl5" type="file" accept="image/*" />
-    </div>
-  </div>
-
   <div class="upload-container">
     <button
       mat-fab
@@ -119,17 +87,104 @@
       mat-raised-button
       (click)="fileInput.click()"
     >
-      <mat-icon>arrow_upward</mat-icon>
-      <mat-icon>check</mat-icon>
+      <mat-icon *ngIf="!hasImage1">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage1">check</mat-icon>
     </button>
     <mat-label> Upload imagen 1</mat-label>
     <input
       hidden
-      formControlName="image1"
-      (change)="onFileSelected()"
+      (change)="onFileSelected($event)"
       #fileInput
       type="file"
-      id="file"
+      name="image1"
+      accept="image/*"
+    />
+  </div>
+
+  <div class="upload-container">
+    <button
+      mat-fab
+      color="primary"
+      type="button"
+      mat-raised-button
+      (click)="fileInput2.click()"
+    >
+      <mat-icon *ngIf="!hasImage2">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage2">check</mat-icon>
+    </button>
+    <mat-label> Upload imagen 2</mat-label>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput2
+      type="file"
+      name="image2"
+      accept="image/*"
+    />
+  </div>
+
+  <div class="upload-container">
+    <button
+      mat-fab
+      color="primary"
+      type="button"
+      mat-raised-button
+      (click)="fileInput3.click()"
+    >
+      <mat-icon *ngIf="!hasImage3">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage3">check</mat-icon>
+    </button>
+    <mat-label> Upload imagen 3</mat-label>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput3
+      type="file"
+      name="image3"
+      accept="image/*"
+    />
+  </div>
+
+  <div class="upload-container">
+    <button
+      mat-fab
+      color="primary"
+      type="button"
+      mat-raised-button
+      (click)="fileInput4.click()"
+    >
+      <mat-icon *ngIf="!hasImage4">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage4">check</mat-icon>
+    </button>
+    <mat-label> Upload imagen 4</mat-label>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput4
+      type="file"
+      name="image4"
+      accept="image/*"
+    />
+  </div>
+
+  <div class="upload-container">
+    <button
+      mat-fab
+      color="primary"
+      type="button"
+      mat-raised-button
+      (click)="fileInput5.click()"
+    >
+      <mat-icon *ngIf="!hasImage5">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage5">check</mat-icon>
+    </button>
+    <mat-label> Upload imagen 5</mat-label>
+    <input
+      hidden
+      (change)="onFileSelected($event)"
+      #fileInput5
+      type="file"
+      name="image5"
       accept="image/*"
     />
   </div>

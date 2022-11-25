@@ -21,20 +21,20 @@ export class ProductAddEditComponent implements OnInit {
   form: FormGroup;
   product: ProductModel = new ProductModel(
     '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    '',
-    '',
+    'fsdf',
+    'sdfs',
     0,
     0,
     '',
     '',
-    false,
-    [],
-    [],
-    [],
-    [],
-    []
+    false
   );
   loading: boolean = false;
+  hasImage1: boolean = false;
+  hasImage2: boolean = false;
+  hasImage3: boolean = false;
+  hasImage4: boolean = false;
+  hasImage5: boolean = false;
 
   matcher = new MyErrorStateMatcher();
   constructor(
@@ -69,11 +69,11 @@ export class ProductAddEditComponent implements OnInit {
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
       note: [this.product.note, []],
-      image1: ['', []],
-      imageFormControl2: ['', []],
-      imageFormControl3: ['', []],
-      imageFormControl4: ['', []],
-      imageFormControl5: ['', []],
+      image1: [this.product.image1, null],
+      image2: [this.product.image2, null],
+      image3: [null],
+      image4: [null],
+      image5: [null],
     });
   }
 
@@ -82,36 +82,59 @@ export class ProductAddEditComponent implements OnInit {
     this._router.navigate(['product']);
   }
   save() {
+    this.buildObject();
     this._productService.store(this.product).subscribe({
       next: (data) => {
         console.log(data);
       },
       error: (err) => {
-        console.log(err);
+        console.log('erro', err);
       },
     });
   }
-  onFileSelected() {
-    const inputNode: any = document.querySelector('#file');
-    let image: any;
-    if (typeof FileReader !== 'undefined') {
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        image = e.target.result;
-        this.product.imageTest = new Uint8Array(image);
-        console.log('denovo', image);
-      };
-
-      reader.readAsArrayBuffer(inputNode.files[0]);
-      console.log(reader);
-      console.log(reader.result);
-      console.log('image', image);
-      console.log(this.form.controls['image1'].value);
-
-      this.product.imageTest = image;
+  onFileSelected(event: Event) {
+    if (event && event.target) {
+      const element = event.target as HTMLInputElement;
+      if (element.files) {
+        const file: File = element.files[0];
+        const name: string = element.name;
+        this.form.controls[name].patchValue(file);
+        this.form.controls[name].updateValueAndValidity();
+        this.switchIcon(name);
+      }
     }
   }
+
+  //#region Metodos Privados
+  private buildObject(): void {
+    this.product.image1 = this.form.value.image1;
+    this.product.image2 = this.form.value.image2;
+    this.product.image3 = this.form.value.image3;
+    this.product.image4 = this.form.value.image4;
+    this.product.image5 = this.form.value.image5;
+  }
+  private switchIcon(name: string): void {
+    switch (name) {
+      case 'image1':
+        this.hasImage1 = true;
+        break;
+      case 'image2':
+        this.hasImage2 = true;
+        break;
+      case 'image3':
+        this.hasImage3 = true;
+        break;
+      case 'image4':
+        this.hasImage4 = true;
+        break;
+      case 'image5':
+        this.hasImage5 = true;
+        break;
+      default:
+        break;
+    }
+  }
+  //#endregion
 }
 
 /** Error when invalid control is dirty, touched, or submitted. */
