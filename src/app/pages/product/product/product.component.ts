@@ -27,7 +27,6 @@ export class ProductComponent implements OnInit {
     this._router.navigate(['/product-add-edit']);
   }
   editProduct($event: ProductModel) {
-    console.log($event);
     this._router.navigate(['/product-add-edit']);
   }
 }

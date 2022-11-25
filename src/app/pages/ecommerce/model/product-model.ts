@@ -8,11 +8,11 @@ export class ProductModel {
     public description: string,
     public note: string,
     public inCart: boolean,
-    public image1: [],
-    public image2: [],
-    public image3: [],
-    public image4: [],
-    public image5: []
+    public image1?: any,
+    public image2?: File | null,
+    public image3?: File | null,
+    public image4?: File | null,
+    public image5?: File | null
   ) {}
-  public imageTest: any;
+  public imageTest: File | undefined;
 }
