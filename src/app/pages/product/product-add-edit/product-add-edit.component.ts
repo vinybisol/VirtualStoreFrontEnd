@@ -20,9 +20,9 @@ import { ProductService } from '../product.service';
 export class ProductAddEditComponent implements OnInit {
   form: FormGroup;
   product: ProductModel = new ProductModel(
-    '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-    'fsdf',
-    'sdfs',
+    undefined,
+    'Produto Teste',
+    'Nome curto',
     0,
     0,
     '',
@@ -86,6 +86,17 @@ export class ProductAddEditComponent implements OnInit {
     this._productService.store(this.product).subscribe({
       next: (data) => {
         console.log(data);
+        this.saveImages();
+      },
+      error: (err) => {
+        console.log('erro', err);
+      },
+    });
+  }
+  saveImages(): void {
+    this._productService.storeImages(this.product).subscribe({
+      next: (data) => {
+        console.log(data);
       },
       error: (err) => {
         console.log('erro', err);
@@ -107,6 +118,11 @@ export class ProductAddEditComponent implements OnInit {
 
   //#region Metodos Privados
   private buildObject(): void {
+    this.product.name = this.form.value.name;
+    this.product.shortName = this.form.value.shortName;
+    this.product.price = this.form.value.price;
+    this.product.priceMarket = this.form.value.priceMarket;
+    this.product.note = this.form.value.note;
     this.product.image1 = this.form.value.image1;
     this.product.image2 = this.form.value.image2;
     this.product.image3 = this.form.value.image3;

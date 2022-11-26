@@ -1,6 +1,6 @@
 export class ProductModel {
   constructor(
-    public id: string,
+    public _id: string | undefined,
     public name: string,
     public shortName: string,
     public price: number,
@@ -14,5 +14,4 @@ export class ProductModel {
     public image4?: File | null,
     public image5?: File | null
   ) {}
-  public imageTest: File | undefined;
 }
