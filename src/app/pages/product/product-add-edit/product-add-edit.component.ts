@@ -10,7 +10,6 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ProductService } from '../product.service';
 
@@ -32,14 +31,7 @@ export class ProductAddEditComponent implements OnInit {
     false
   );
   loading: boolean = false;
-  hasImage1: boolean = false;
-  hasImage2: boolean = false;
-  hasImage3: boolean = false;
-  hasImage4: boolean = false;
-  hasImage5: boolean = false;
-
-  uploadProgress: number = 0;
-  uploadSub: Subscription = new Subscription();
+  hasImage: boolean = false;
 
   matcher = new MyErrorStateMatcher();
   constructor(
@@ -75,11 +67,7 @@ export class ProductAddEditComponent implements OnInit {
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
       note: [this.product.note, []],
-      image1: [this.product.image1, null],
-      image2: [this.product.image2, null],
-      image3: [null],
-      image4: [null],
-      image5: [null],
+      image: [this.product.image, null],
     });
   }
 
@@ -108,6 +96,9 @@ export class ProductAddEditComponent implements OnInit {
   saveImages(): void {
     this._productService.storeImages(this.product).subscribe({
       next: (data) => {
+        this._snackBar.open('Dados salvo com sucesso!!!', 'Sucesso', {
+          duration: 3000,
+        });
         console.log(data);
       },
       error: (err) => {
@@ -123,23 +114,11 @@ export class ProductAddEditComponent implements OnInit {
     if (event && event.target) {
       const element = event.target as HTMLInputElement;
       if (element.files) {
-        const file: File = element.files[0];
-        const name: string = element.name;
-        this.form.controls[name].patchValue(file);
-        this.form.controls[name].updateValueAndValidity();
-        this.switchIcon(name);
+        const files: FileList = element.files;
+        this.form.controls['image'].patchValue(files);
+        this.form.controls['image'].updateValueAndValidity();
       }
     }
-  }
-
-  cancelUpload() {
-    this.uploadSub.unsubscribe();
-    this.reset();
-  }
-
-  reset() {
-    this.uploadProgress = 0;
-    this.uploadSub.unsubscribe();
   }
 
   //#region Metodos Privados
@@ -149,32 +128,7 @@ export class ProductAddEditComponent implements OnInit {
     this.product.price = this.form.value.price;
     this.product.priceMarket = this.form.value.priceMarket;
     this.product.note = this.form.value.note;
-    this.product.image1 = this.form.value.image1;
-    this.product.image2 = this.form.value.image2;
-    this.product.image3 = this.form.value.image3;
-    this.product.image4 = this.form.value.image4;
-    this.product.image5 = this.form.value.image5;
-  }
-  private switchIcon(name: string): void {
-    switch (name) {
-      case 'image1':
-        this.hasImage1 = true;
-        break;
-      case 'image2':
-        this.hasImage2 = true;
-        break;
-      case 'image3':
-        this.hasImage3 = true;
-        break;
-      case 'image4':
-        this.hasImage4 = true;
-        break;
-      case 'image5':
-        this.hasImage5 = true;
-        break;
-      default:
-        break;
-    }
+    this.product.image = this.form.value.image;
   }
   //#endregion
 }
