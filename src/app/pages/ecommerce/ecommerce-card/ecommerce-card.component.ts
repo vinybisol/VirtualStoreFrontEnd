@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ProductService } from '../../product/product.service';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
 import { ProductModel } from '../model/product-model';
@@ -15,10 +16,20 @@ export class EcommerceCardComponent implements OnInit {
   private cartShopping: CartShoppingModel = new CartShoppingModel();
   public breakpoint: number = 0;
 
-  constructor(private readonly _ecommerceService: EcommerceService) {
-    this._ecommerceService
-      .getAllProductAsync()
-      .subscribe({ next: (data) => (this.products = data) });
+  constructor(
+    private readonly _ecommerceService: EcommerceService,
+    private readonly _productService: ProductService
+  ) {
+    this._productService.getAllProductAsync().subscribe({
+      next: (data) => (this.products = data),
+      error: () => {
+        this._ecommerceService.getAllProductAsync().subscribe({
+          next: (data) => {
+            this.products = data;
+          },
+        });
+      },
+    });
   }
 
   ngOnInit(): void {

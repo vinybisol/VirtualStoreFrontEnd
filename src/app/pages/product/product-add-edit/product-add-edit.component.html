@@ -1,3 +1,6 @@
+<div *ngIf="loading">
+  <app-mat-spenner-overlay></app-mat-spenner-overlay>
+</div>
 <form class="example-form" [formGroup]="form">
   <!-- Nome Curto -->
   <mat-form-field class="example-full-width" appearance="fill">
@@ -87,104 +90,16 @@
       mat-raised-button
       (click)="fileInput.click()"
     >
-      <mat-icon *ngIf="!hasImage1">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage1">check</mat-icon>
+      <mat-icon *ngIf="!hasImage">arrow_upward</mat-icon>
+      <mat-icon *ngIf="hasImage">check</mat-icon>
     </button>
-    <mat-label> Upload imagen 1</mat-label>
+    <mat-label> Upload imagen</mat-label>
     <input
       hidden
       (change)="onFileSelected($event)"
       #fileInput
       type="file"
-      name="image1"
-      accept="image/*"
-    />
-  </div>
-
-  <div class="upload-container">
-    <button
-      mat-fab
-      color="primary"
-      type="button"
-      mat-raised-button
-      (click)="fileInput2.click()"
-    >
-      <mat-icon *ngIf="!hasImage2">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage2">check</mat-icon>
-    </button>
-    <mat-label> Upload imagen 2</mat-label>
-    <input
-      hidden
-      (change)="onFileSelected($event)"
-      #fileInput2
-      type="file"
-      name="image2"
-      accept="image/*"
-    />
-  </div>
-
-  <div class="upload-container">
-    <button
-      mat-fab
-      color="primary"
-      type="button"
-      mat-raised-button
-      (click)="fileInput3.click()"
-    >
-      <mat-icon *ngIf="!hasImage3">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage3">check</mat-icon>
-    </button>
-    <mat-label> Upload imagen 3</mat-label>
-    <input
-      hidden
-      (change)="onFileSelected($event)"
-      #fileInput3
-      type="file"
-      name="image3"
-      accept="image/*"
-    />
-  </div>
-
-  <div class="upload-container">
-    <button
-      mat-fab
-      color="primary"
-      type="button"
-      mat-raised-button
-      (click)="fileInput4.click()"
-    >
-      <mat-icon *ngIf="!hasImage4">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage4">check</mat-icon>
-    </button>
-    <mat-label> Upload imagen 4</mat-label>
-    <input
-      hidden
-      (change)="onFileSelected($event)"
-      #fileInput4
-      type="file"
-      name="image4"
-      accept="image/*"
-    />
-  </div>
-
-  <div class="upload-container">
-    <button
-      mat-fab
-      color="primary"
-      type="button"
-      mat-raised-button
-      (click)="fileInput5.click()"
-    >
-      <mat-icon *ngIf="!hasImage5">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage5">check</mat-icon>
-    </button>
-    <mat-label> Upload imagen 5</mat-label>
-    <input
-      hidden
-      (change)="onFileSelected($event)"
-      #fileInput5
-      type="file"
-      name="image5"
+      multiple
       accept="image/*"
     />
   </div>
