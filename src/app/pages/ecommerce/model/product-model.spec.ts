@@ -3,21 +3,7 @@ import { ProductModel } from './product-model';
 describe('ProductModel', () => {
   it('should create an instance', () => {
     expect(
-      new ProductModel(
-        0,
-        'full name',
-        'test name',
-        12,
-        20,
-        '',
-        '',
-        false,
-        [],
-        [],
-        [],
-        [],
-        []
-      )
+      new ProductModel('', 'full name', 'test name', 12, 20, '', '', false)
     ).toBeTruthy();
   });
 });

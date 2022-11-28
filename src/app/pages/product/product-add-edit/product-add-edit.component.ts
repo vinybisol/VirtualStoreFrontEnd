@@ -8,7 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ProductService } from '../product.service';
 
@@ -36,11 +38,15 @@ export class ProductAddEditComponent implements OnInit {
   hasImage4: boolean = false;
   hasImage5: boolean = false;
 
+  uploadProgress: number = 0;
+  uploadSub: Subscription = new Subscription();
+
   matcher = new MyErrorStateMatcher();
   constructor(
     private readonly _router: Router,
     private readonly _formBuilder: FormBuilder,
-    private readonly _productService: ProductService
+    private readonly _productService: ProductService,
+    private _snackBar: MatSnackBar
   ) {
     this.form = this._formBuilder.group({
       shortName: [
@@ -82,15 +88,21 @@ export class ProductAddEditComponent implements OnInit {
     this._router.navigate(['product']);
   }
   save() {
+    this.loading = true;
     this.buildObject();
-    this._productService.store(this.product).subscribe({
+    const upload$ = this._productService.store(this.product).subscribe({
       next: (data) => {
         console.log(data);
         this.saveImages();
       },
       error: (err) => {
+        this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
+          duration: 3000,
+        });
+        this.loading = false;
         console.log('erro', err);
       },
+      complete: () => (this.loading = false),
     });
   }
   saveImages(): void {
@@ -99,10 +111,14 @@ export class ProductAddEditComponent implements OnInit {
         console.log(data);
       },
       error: (err) => {
+        this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
+          duration: 3000,
+        });
         console.log('erro', err);
       },
     });
   }
+
   onFileSelected(event: Event) {
     if (event && event.target) {
       const element = event.target as HTMLInputElement;
@@ -114,6 +130,16 @@ export class ProductAddEditComponent implements OnInit {
         this.switchIcon(name);
       }
     }
+  }
+
+  cancelUpload() {
+    this.uploadSub.unsubscribe();
+    this.reset();
+  }
+
+  reset() {
+    this.uploadProgress = 0;
+    this.uploadSub.unsubscribe();
   }
 
   //#region Metodos Privados
