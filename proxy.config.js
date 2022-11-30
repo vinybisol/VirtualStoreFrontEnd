@@ -1,8 +1,11 @@
 const proxy = [
   {
     context: "/api",
-    target: "http://localhost:5159",
-    pathRewrite: { "^/api": "api" },
+    target: "https://virtual-store-backend.azurewebsites.net",
+    pathRewrite: { "^/api": "/api" },
+    secure: false,
+    logLevel: "debug",
+    changeOrigin: true,
   },
 ];
 module.exports = proxy;
