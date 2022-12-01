@@ -11,7 +11,7 @@ export const environment = {
     authDomain: 'planar-granite-317805.firebaseapp.com',
     messagingSenderId: '1019728209809',
   },
-  apiUrl: 'http://localhost:4200',
+  apiUrl: 'http://localhost:5159',
   production: false,
 };
 
