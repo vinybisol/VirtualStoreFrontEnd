@@ -27,7 +27,6 @@ export class ProductAddEditComponent implements OnInit {
     0,
     0,
     '',
-    '',
     false
   );
   loading: boolean = false;

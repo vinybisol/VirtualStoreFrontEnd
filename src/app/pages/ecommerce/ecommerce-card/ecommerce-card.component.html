@@ -1,4 +1,8 @@
 <app-ecommerce-header></app-ecommerce-header>
+<div *ngIf="loading">
+  <app-mat-spinner-overlay></app-mat-spinner-overlay>
+</div>
+
 <mat-grid-list
   class="container"
   [cols]="breakpoint"
@@ -12,19 +16,19 @@
 
       <img
         mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+        src="{{ 'data:image/jpg;base64,' + imagePath }}"
         alt="Photo of a Shiba Inu"
       />
 
       <mat-card-title>
-        {{ product.price | currency: "BRL" }}
+        {{ product.price | currency : "BRL" }}
       </mat-card-title>
-      {{ product.priceMarket | currency: "BRL" }}
+      {{ product.priceMarket | currency : "BRL" }}
 
       <small>valor de mercado</small>
 
       <mat-card-content>
-        {{ product.description }}
+        {{ product.note }}
       </mat-card-content>
 
       <mat-card-actions>

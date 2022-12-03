@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+
 import { AppMaterialModule } from './app-material/app-material.module';
-import { MatSpennerOverlayComponent } from './mat-spenner-overlay/mat-spenner-overlay.component';
+import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 
 @NgModule({
-  declarations: [MatSpennerOverlayComponent],
+  declarations: [MatSpinnerOverlayComponent],
   imports: [CommonModule, AppMaterialModule],
-  exports: [AppMaterialModule, MatSpennerOverlayComponent],
+  exports: [AppMaterialModule, MatSpinnerOverlayComponent],
 })
 export class SharedModule {}
