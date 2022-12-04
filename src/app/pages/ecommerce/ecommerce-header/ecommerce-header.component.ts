@@ -14,8 +14,6 @@ export class EcommerceHeaderComponent implements OnInit {
   ngOnInit(): void {
     this._ecommerceService.getCartShopping().subscribe({
       next: (data) => {
-        console.log(data);
-
         return (this.cart = data);
       },
     });

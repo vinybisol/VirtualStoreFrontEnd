@@ -9,7 +9,7 @@ import { ProductModel } from '../../ecommerce/model/product-model';
 export class ProductListComponent implements OnInit {
   @Input() products: ProductModel[] = [];
   @Output() outputProduct = new EventEmitter<ProductModel>();
-  displayedColumns: string[] = ['name', 'price'];
+  displayedColumns: string[] = ['name', 'price', 'priceMarket'];
 
   constructor() {}
 

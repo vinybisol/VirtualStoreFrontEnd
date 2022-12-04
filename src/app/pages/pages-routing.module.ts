@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { EcommerceCardComponent } from './ecommerce/ecommerce-card/ecommerce-card.component';
-import { ProductAddEditComponent } from './product/product-add-edit/product-add-edit.component';
-import { ProductComponent } from './product/product/product.component';
 
 const routes: Routes = [
   { path: '', component: EcommerceCardComponent },
   { path: 'ecommerce-card', component: EcommerceCardComponent },
-  { path: 'product', component: ProductComponent },
-  { path: 'product-add-edit', component: ProductAddEditComponent },
+  {
+    path: 'product',
+    loadChildren: () =>
+      import('./product/product.module').then((module) => module.ProductModule),
+  },
 ];
 
 @NgModule({

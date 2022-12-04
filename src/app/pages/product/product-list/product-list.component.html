@@ -1,5 +1,6 @@
 <mat-card>
   <mat-table [dataSource]="products" class="mat-elevation-z8">
+    <!-- Coluna Name -->
     <ng-container matColumnDef="name">
       <mat-header-cell mat-header-cell *matHeaderCellDef>
         Name
@@ -9,12 +10,23 @@
       </mat-cell>
     </ng-container>
 
+    <!-- Coluna Price -->
     <ng-container matColumnDef="price">
       <mat-header-cell mat-header-cell *matHeaderCellDef>
         Preço
       </mat-header-cell>
       <mat-cell mat-cell *matCellDef="let product">
         {{ product.price }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Coluna Price Market -->
+    <ng-container matColumnDef="priceMarket">
+      <mat-header-cell mat-header-cell *matHeaderCellDef>
+        Preço de Mercado
+      </mat-header-cell>
+      <mat-cell mat-cell *matCellDef="let product">
+        {{ product.priceMarket }}
       </mat-cell>
     </ng-container>
 

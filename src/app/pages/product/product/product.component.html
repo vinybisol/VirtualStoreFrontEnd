@@ -1,9 +1,15 @@
-<div *ngIf="products$ | async as product">
+<div *ngIf="products$ | async as product; else loading">
   <app-product-list
     [products]="product"
     (outputProduct)="editProduct($event)"
   ></app-product-list>
 </div>
+
+<!--Loading-->
+<ng-template #loading>
+  <app-mat-spinner-overlay></app-mat-spinner-overlay>
+</ng-template>
+
 <div class="add-button-container">
   <button mat-fab color="primary" (click)="gotoAdd()" aria-label="add button">
     <mat-icon>add</mat-icon>

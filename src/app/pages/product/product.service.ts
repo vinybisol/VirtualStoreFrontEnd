@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { first, Observable, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, delay, first, Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductModel } from '../ecommerce/model/product-model';
 
@@ -10,10 +11,30 @@ import { ProductModel } from '../ecommerce/model/product-model';
 export class ProductService {
   private readonly API: string = `${environment.apiUrl}/api/Products`;
 
-  constructor(private readonly _http: HttpClient) {}
+  constructor(
+    private readonly _http: HttpClient,
+    private readonly _snackBar: MatSnackBar
+  ) {}
 
   getAllProductAsync(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(this.API).pipe(first());
+    return this._http.get<ProductModel[]>(this.API).pipe(
+      first(),
+      delay(1500),
+      catchError(() => {
+        this.onError();
+        return of([]);
+      })
+    );
+  }
+  getByIdAsync(key: string): Observable<ProductModel> {
+    return this._http.get<ProductModel>(`${this.API}/${key}`).pipe(
+      first(),
+      delay(1500),
+      catchError(() => {
+        this.onError();
+        return of();
+      })
+    );
   }
   store(product: ProductModel): Observable<any> {
     return this._http.post(this.API, product);
@@ -33,5 +54,10 @@ export class ProductService {
       formData.append('files', element as Blob);
     }
     return this._http.post(`${this.API}/Images`, formData);
+  }
+  private onError(): void {
+    this._snackBar.open('erro ao buscar os produtos', 'Aviso', {
+      duration: 3000,
+    });
   }
 }

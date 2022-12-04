@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ProductService } from '../product.service';
 
@@ -34,6 +34,7 @@ export class ProductAddEditComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
   constructor(
+    private readonly _route: ActivatedRoute,
     private readonly _router: Router,
     private readonly _formBuilder: FormBuilder,
     private readonly _productService: ProductService,
@@ -70,7 +71,14 @@ export class ProductAddEditComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._route.params.subscribe((params) => {
+      const paramsRoute: string = params['key'];
+      if (paramsRoute && paramsRoute != '0') {
+        this.onLoad(paramsRoute);
+      }
+    });
+  }
   goBack(): void {
     this._router.navigate(['product']);
   }
@@ -79,7 +87,6 @@ export class ProductAddEditComponent implements OnInit {
     this.buildObject();
     const upload$ = this._productService.store(this.product).subscribe({
       next: (data) => {
-        console.log(data);
         this.saveImages();
       },
       error: (err) => {
@@ -87,7 +94,6 @@ export class ProductAddEditComponent implements OnInit {
           duration: 3000,
         });
         this.loading = false;
-        console.log('erro', err);
       },
       complete: () => (this.loading = false),
     });
@@ -98,13 +104,11 @@ export class ProductAddEditComponent implements OnInit {
         this._snackBar.open('Dados salvo com sucesso!!!', 'Sucesso', {
           duration: 3000,
         });
-        console.log(data);
       },
       error: (err) => {
         this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
           duration: 3000,
         });
-        console.log('erro', err);
       },
     });
   }
@@ -121,6 +125,11 @@ export class ProductAddEditComponent implements OnInit {
   }
 
   //#region Metodos Privados
+  private onLoad(key: string): void {
+    this._productService.getByIdAsync(key).subscribe({
+      next: (data) => (this.product = data),
+    });
+  }
   private buildObject(): void {
     this.product.name = this.form.value.name;
     this.product.shortName = this.form.value.shortName;

@@ -7,24 +7,21 @@ import { EcommerceCardComponent } from './ecommerce/ecommerce-card/ecommerce-car
 import { EcommerceHeaderComponent } from './ecommerce/ecommerce-header/ecommerce-header.component';
 import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
-import { ProductAddEditComponent } from './product/product-add-edit/product-add-edit.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductComponent } from './product/product/product.component';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
     HomeComponent,
     EcommerceCardComponent,
     EcommerceHeaderComponent,
-    ProductListComponent,
-    ProductComponent,
-    ProductAddEditComponent,
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    ProductModule,
   ],
+  exports: [],
 })
 export class PagesModule {}

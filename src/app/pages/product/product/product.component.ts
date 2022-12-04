@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { ProductModel } from '../../ecommerce/model/product-model';
@@ -16,6 +16,7 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private readonly _productService: ProductService,
+    private readonly _activeRoute: ActivatedRoute,
     private readonly _router: Router
   ) {
     this.products$ = this._productService.getAllProductAsync();
@@ -26,7 +27,9 @@ export class ProductComponent implements OnInit {
   gotoAdd(): void {
     this._router.navigate(['/product-add-edit']);
   }
-  editProduct($event: ProductModel) {
-    this._router.navigate(['/product-add-edit']);
+  editProduct(product: any) {
+    this._router.navigate([product.key], {
+      relativeTo: this._activeRoute,
+    });
   }
 }
