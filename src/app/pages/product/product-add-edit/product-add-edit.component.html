@@ -1,7 +1,7 @@
 <div *ngIf="loading">
   <app-mat-spinner-overlay></app-mat-spinner-overlay>
 </div>
-<form class="example-form" [formGroup]="form">
+<form class="example-form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <!-- Nome Curto -->
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Nome Curto</mat-label>
@@ -111,7 +111,7 @@
     mat-fab
     color="primary"
     class="button"
-    (click)="save()"
+    (click)="onSubmit()"
     aria-label="add button"
   >
     <mat-icon>save</mat-icon>

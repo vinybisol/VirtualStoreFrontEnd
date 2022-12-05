@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, delay, first, Observable, of, throwError } from 'rxjs';
+import { delay, first, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductModel } from '../ecommerce/model/product-model';
 
@@ -11,35 +10,20 @@ import { ProductModel } from '../ecommerce/model/product-model';
 export class ProductService {
   private readonly API: string = `${environment.apiUrl}/api/Products`;
 
-  constructor(
-    private readonly _http: HttpClient,
-    private readonly _snackBar: MatSnackBar
-  ) {}
+  constructor(private readonly _http: HttpClient) {}
 
   getAllProductAsync(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(this.API).pipe(
-      first(),
-      delay(1500),
-      catchError(() => {
-        this.onError();
-        return of([]);
-      })
-    );
+    return this._http.get<ProductModel[]>(this.API).pipe(first(), delay(1500));
   }
   getByIdAsync(key: string): Observable<ProductModel> {
-    return this._http.get<ProductModel>(`${this.API}/${key}`).pipe(
-      first(),
-      delay(1500),
-      catchError(() => {
-        this.onError();
-        return of();
-      })
-    );
+    return this._http
+      .get<ProductModel>(`${this.API}/${key}`)
+      .pipe(first(), delay(1500));
   }
   store(product: ProductModel): Observable<any> {
     return this._http.post(this.API, product);
   }
-  storeImages(product: ProductModel): Observable<any> {
+  storeImages(product: ProductModel, key: string): Observable<any> {
     if (!product.image)
       return throwError(() => {
         return {
@@ -49,15 +33,12 @@ export class ProductService {
       });
 
     const formData = new FormData();
+    //    formData.append('productKey', key);
+
     for (let index = 0; index < product.image.length; index++) {
       const element = product.image.item(index);
       formData.append('files', element as Blob);
     }
-    return this._http.post(`${this.API}/Images`, formData);
-  }
-  private onError(): void {
-    this._snackBar.open('erro ao buscar os produtos', 'Aviso', {
-      duration: 3000,
-    });
+    return this._http.post(`${this.API}/Images?productKey=${key}`, formData);
   }
 }

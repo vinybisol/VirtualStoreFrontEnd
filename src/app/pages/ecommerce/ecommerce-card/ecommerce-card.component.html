@@ -13,7 +13,7 @@
         <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
 
         <img
-          *ngIf="!product.image"
+          *ngIf="!product.images"
           mat-card-image
           src="assets\ecommerce\semimagem.png"
           alt="sem imagem"
@@ -21,7 +21,7 @@
         <img
           *ngFor="let image of product.images"
           mat-card-image
-          src="{{ 'data:image/jpg;base64,' + image }}"
+          src="{{ 'data:image/jpg;base64,' + image.image }}"
           alt="Photo of a Shiba Inu"
         />
 

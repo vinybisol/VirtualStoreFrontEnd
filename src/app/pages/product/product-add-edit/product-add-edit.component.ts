@@ -10,6 +10,7 @@ import {
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, of, switchMap } from 'rxjs';
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ProductService } from '../product.service';
 
@@ -20,16 +21,8 @@ import { ProductService } from '../product.service';
 })
 export class ProductAddEditComponent implements OnInit {
   form: FormGroup;
-  product: ProductModel = new ProductModel(
-    undefined,
-    'Produto Teste',
-    'Nome curto',
-    0,
-    0,
-    '',
-    false
-  );
-  loading: boolean = false;
+  product: ProductModel = new ProductModel();
+  loading: boolean = true;
   hasImage: boolean = false;
 
   matcher = new MyErrorStateMatcher();
@@ -42,7 +35,7 @@ export class ProductAddEditComponent implements OnInit {
   ) {
     this.form = this._formBuilder.group({
       shortName: [
-        this.product.shortName,
+        null,
         [
           Validators.required,
           Validators.maxLength(20),
@@ -50,7 +43,7 @@ export class ProductAddEditComponent implements OnInit {
         ],
       ],
       name: [
-        this.product.name,
+        null,
         [
           Validators.required,
           Validators.maxLength(20),
@@ -59,57 +52,73 @@ export class ProductAddEditComponent implements OnInit {
       ],
 
       price: [
-        this.product.price,
+        null,
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
       priceMarket: [
         this.product.priceMarket,
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
-      note: [this.product.note, []],
-      image: [this.product.image, null],
+      note: [this.product.note],
+      image: [this.product.image],
     });
   }
 
   ngOnInit(): void {
-    this._route.params.subscribe((params) => {
-      const paramsRoute: string = params['key'];
-      if (paramsRoute && paramsRoute != '0') {
-        this.onLoad(paramsRoute);
-      }
-    });
+    this._route.params
+      .pipe(
+        map((params: any) => params['key']), //pega o params da requsição
+        switchMap((key) => {
+          if (!key) {
+            return of<ProductModel>(this.product);
+          }
+          return this._productService.getByIdAsync(key);
+        }) // passa um valor zerado ou pega os dados no servidor
+      )
+      .subscribe({
+        next: (product) => {
+          this.updateForm(product);
+          this.changeLoading(false);
+        },
+        error: () => this.changeLoading(false),
+      }); // monta os dados no formulario
   }
+
   goBack(): void {
+    this.reset();
     this._router.navigate(['product']);
   }
-  save() {
-    this.loading = true;
+  onSubmit() {
+    this.changeLoading(true);
     this.buildObject();
-    const upload$ = this._productService.store(this.product).subscribe({
-      next: (data) => {
-        this.saveImages();
+    this._productService.store(this.product).subscribe({
+      next: (data: ProductModel) => {
+        this.saveImages(data.key!);
+        this.goBack();
       },
       error: (err) => {
         this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
           duration: 3000,
         });
-        this.loading = false;
+        this.changeLoading(false);
       },
-      complete: () => (this.loading = false),
+      complete: () => this.changeLoading(false),
     });
   }
-  saveImages(): void {
-    this._productService.storeImages(this.product).subscribe({
+  saveImages(key: string): void {
+    this._productService.storeImages(this.product, key).subscribe({
       next: (data) => {
         this._snackBar.open('Dados salvo com sucesso!!!', 'Sucesso', {
           duration: 3000,
         });
       },
       error: (err) => {
+        console.warn(err);
         this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
           duration: 3000,
         });
       },
+      complete: () => this.goBack(),
     });
   }
 
@@ -125,11 +134,6 @@ export class ProductAddEditComponent implements OnInit {
   }
 
   //#region Metodos Privados
-  private onLoad(key: string): void {
-    this._productService.getByIdAsync(key).subscribe({
-      next: (data) => (this.product = data),
-    });
-  }
   private buildObject(): void {
     this.product.name = this.form.value.name;
     this.product.shortName = this.form.value.shortName;
@@ -137,6 +141,23 @@ export class ProductAddEditComponent implements OnInit {
     this.product.priceMarket = this.form.value.priceMarket;
     this.product.note = this.form.value.note;
     this.product.image = this.form.value.image;
+  }
+  private updateForm(product: ProductModel): void {
+    this.form.patchValue({
+      name: product.name,
+      shortName: product.shortName,
+      price: product.price,
+      priceMarket: product.priceMarket,
+      note: product.note,
+      image: product.image,
+    });
+  }
+  private changeLoading(state: boolean): void {
+    this.loading = state;
+  }
+
+  private reset(): void {
+    this.form.reset();
   }
   //#endregion
 }

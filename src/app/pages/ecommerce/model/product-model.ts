@@ -1,15 +1,14 @@
 export class ProductModel {
-  constructor(
-    public key: string | undefined,
-    public name: string,
-    public shortName: string,
-    public price: number,
-    public priceMarket: number,
-    public note: string,
-    public inCart: boolean,
-    public image?: FileList,
-    public images?: Image[]
-  ) {}
+  public key: string | undefined = undefined;
+  public name: string = '';
+  public shortName: string = '';
+  public price: number = 0;
+  public priceMarket: number = 0;
+  public note: string = '';
+  public inCart: boolean = false;
+  public image?: FileList;
+  public images?: Image[];
+  constructor() {}
 }
 interface Image {
   key: string;

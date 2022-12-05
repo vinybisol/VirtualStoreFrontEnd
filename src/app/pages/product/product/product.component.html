@@ -1,7 +1,7 @@
 <div *ngIf="products$ | async as product; else loading">
   <app-product-list
     [products]="product"
-    (outputProduct)="editProduct($event)"
+    (outputProduct)="onEdit($event)"
   ></app-product-list>
 </div>
 
@@ -11,7 +11,7 @@
 </ng-template>
 
 <div class="add-button-container">
-  <button mat-fab color="primary" (click)="gotoAdd()" aria-label="add button">
+  <button mat-fab color="primary" (click)="onAdd()" aria-label="add button">
     <mat-icon>add</mat-icon>
   </button>
 </div>
