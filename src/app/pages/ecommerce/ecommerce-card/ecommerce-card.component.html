@@ -5,20 +5,20 @@
     <mat-card class="card" *ngFor="let product of products">
       <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
       <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
-
-      <img
-        class="mat-mdc-card-image mdc-card__media"
-        *ngIf="!product.images"
-        src="assets\ecommerce\semimagem.png"
-        alt="sem imagem"
-      />
-      <img
-        class="card-images"
-        *ngFor="let image of product.images"
-        mat-card-image
-        src="{{ 'data:image/jpg;base64,' + image.image }}"
-        alt="Photo of a Shiba Inu"
-      />
+      <div class="div__image">
+        <img
+          class="mdc-card__media"
+          *ngIf="!product.images"
+          src="assets\ecommerce\semimagem.png"
+          alt="sem imagem"
+        />
+        <img
+          class="mdc-card__media"
+          *ngFor="let image of product.images"
+          src="{{ 'data:image/jpg;base64,' + image.image }}"
+          alt="Photo of a Shiba Inu"
+        />
+      </div>
 
       <mat-card-title>
         {{ product.price | currency : "BRL" }}
