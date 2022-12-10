@@ -7,8 +7,8 @@
       <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
       <div class="div__image">
         <img
-          class="mdc-card__media"
-          *ngIf="!product.images"
+          class="mdc-card__sem__media"
+          *ngIf="product.images?.length === 0"
           src="assets\ecommerce\semimagem.png"
           alt="sem imagem"
         />
