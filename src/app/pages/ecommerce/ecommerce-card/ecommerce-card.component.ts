@@ -52,13 +52,14 @@ export class EcommerceCardComponent implements OnInit {
   onResize(event: UIEvent) {
     const w = event.target as Window;
     const windowSize = w.innerWidth;
-    const perPage = Math.round(windowSize / 250);
+    const perPage = Math.round(windowSize / 400);
     this.breakpoint = perPage;
+    console.warn(this.breakpoint);
   }
 
   //#region Metodos Privados
   private perPage(windowSize: number): number {
-    return Math.round(windowSize / 250);
+    return Math.round(windowSize / 400);
   }
   //#endregion
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { delay, first, Observable, throwError } from 'rxjs';
+import { first, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProductModel } from '../ecommerce/model/product-model';
 
@@ -13,12 +13,10 @@ export class ProductService {
   constructor(private readonly _http: HttpClient) {}
 
   getAllProductAsync(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(this.API).pipe(first(), delay(1500));
+    return this._http.get<ProductModel[]>(this.API).pipe(first());
   }
   getByIdAsync(key: string): Observable<ProductModel> {
-    return this._http
-      .get<ProductModel>(`${this.API}/${key}`)
-      .pipe(first(), delay(1500));
+    return this._http.get<ProductModel>(`${this.API}/${key}`).pipe(first());
   }
   store(product: ProductModel): Observable<any> {
     return this._http.post(this.API, product);
@@ -33,8 +31,6 @@ export class ProductService {
       });
 
     const formData = new FormData();
-    //    formData.append('productKey', key);
-
     for (let index = 0; index < product.image.length; index++) {
       const element = product.image.item(index);
       formData.append('files', element as Blob);

@@ -1,54 +1,48 @@
 <app-ecommerce-header></app-ecommerce-header>
 
 <div *ngIf="products$ | async as products; else loading">
-  <mat-grid-list
-    class="container"
-    [cols]="breakpoint"
-    rowHeight="450px"
-    (window:resize)="onResize($event)"
-  >
-    <mat-grid-tile *ngFor="let product of products">
-      <mat-card class="example-card">
-        <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
-        <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
-
+  <div class="card-box">
+    <mat-card class="card" *ngFor="let product of products">
+      <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
+      <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
+      <div class="div__image">
         <img
+          class="mdc-card__media"
           *ngIf="!product.images"
-          mat-card-image
           src="assets\ecommerce\semimagem.png"
           alt="sem imagem"
         />
         <img
+          class="mdc-card__media"
           *ngFor="let image of product.images"
-          mat-card-image
           src="{{ 'data:image/jpg;base64,' + image.image }}"
           alt="Photo of a Shiba Inu"
         />
+      </div>
 
-        <mat-card-title>
-          {{ product.price | currency : "BRL" }}
-        </mat-card-title>
-        {{ product.priceMarket | currency : "BRL" }}
+      <mat-card-title>
+        {{ product.price | currency : "BRL" }}
+      </mat-card-title>
+      {{ product.priceMarket | currency : "BRL" }}
 
-        <small>valor de mercado</small>
+      <small>valor de mercado</small>
 
-        <mat-card-content>
-          {{ product.note }}
-        </mat-card-content>
+      <mat-card-content>
+        {{ product.note }}
+      </mat-card-content>
 
-        <mat-card-actions>
-          <button
-            mat-raised-button
-            [disabled]="product.inCart"
-            (click)="addInCartShopping(product)"
-            color="primary"
-          >
-            {{ product.inCart ? "No Carrinho" : "Comprar" }}
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          [disabled]="product.inCart"
+          (click)="addInCartShopping(product)"
+          color="primary"
+        >
+          {{ product.inCart ? "No Carrinho" : "Comprar" }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>
 
 <!--Loading-->
