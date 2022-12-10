@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 2em;
+  justify-content: center;
 }
 
 .card {
-  margin: 2em;
-  width: 250px;
+  margin: 1rem;
+  width: 300px;
   min-width: 250px;
   display: grid;
   grid-template-rows: 30px 30px 1fr auto;
@@ -19,4 +19,7 @@
   height: 400px;
   object-fit: cover;
   object-position: center;
+}
+.mdc-card__sem__media {
+  width: 100%;
 }
