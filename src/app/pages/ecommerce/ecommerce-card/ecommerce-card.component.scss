@@ -1,13 +1,8 @@
-.container {
-  border: 1px solid black;
-}
 .card-box {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin: 2em;
-  // grid-template-columns: repeat(3, 360px);
-  // column-gap: 1rem;
 }
 
 .card {
@@ -24,58 +19,4 @@
   height: 400px;
   object-fit: cover;
   object-position: center;
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  .container {
-    background: red;
-    border: 3px solid #fff;
-    padding: 20px;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .container {
-    background: green;
-    border: 3px solid #fff;
-    padding: 20px;
-    height: 100%;
-  }
-  .card-box {
-    display: flex;
-    justify-content: center;
-  }
-  .card {
-    width: 50%;
-    height: 300px;
-    margin: 2em;
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  .container {
-    background: blue;
-    border: 3px solid #fff;
-    padding: 20px;
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .container {
-    background: orange;
-    border: 3px solid #fff;
-    padding: 20px;
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .container {
-    background: pink;
-    display: flex;
-  }
 }
