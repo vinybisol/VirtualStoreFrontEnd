@@ -78,9 +78,9 @@ export class ProductAddEditComponent implements OnInit {
       .subscribe({
         next: (product) => {
           this.updateForm(product);
-          this.changeLoading(false);
+          this.changeLoadingStatus(false);
         },
-        error: () => this.changeLoading(false),
+        error: () => this.changeLoadingStatus(false),
       }); // monta os dados no formulario
   }
 
@@ -89,7 +89,7 @@ export class ProductAddEditComponent implements OnInit {
     this._router.navigate(['product']);
   }
   onSubmit() {
-    this.changeLoading(true);
+    this.changeLoadingStatus(true);
     this.buildObject();
     this._productService.store(this.product).subscribe({
       next: (data: ProductModel) => {
@@ -100,9 +100,9 @@ export class ProductAddEditComponent implements OnInit {
         this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
           duration: 3000,
         });
-        this.changeLoading(false);
+        this.changeLoadingStatus(false);
       },
-      complete: () => this.changeLoading(false),
+      complete: () => this.changeLoadingStatus(false),
     });
   }
   saveImages(key: string): void {
@@ -152,7 +152,7 @@ export class ProductAddEditComponent implements OnInit {
       image: product.image,
     });
   }
-  private changeLoading(state: boolean): void {
+  private changeLoadingStatus(state: boolean): void {
     this.loading = state;
   }
 

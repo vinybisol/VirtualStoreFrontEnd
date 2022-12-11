@@ -21,7 +21,7 @@ export class EcommerceCardComponent implements OnInit {
     private readonly _ecommerceService: EcommerceService,
     private readonly _productService: ProductService
   ) {
-    this.products$ = this._productService.getAllProductAsync();
+    this.products$ = this._productService.getAllProductWithImagesAsync();
   }
 
   ngOnInit(): void {
