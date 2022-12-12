@@ -8,18 +8,26 @@ import { ProductModel } from '../ecommerce/model/product-model';
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly API: string = `${environment.apiUrl}/api/Products`;
+  private readonly API: string = `${environment.apiUrl}/api`;
 
   constructor(private readonly _http: HttpClient) {}
 
   getAllProductAsync(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(this.API).pipe(first());
+    return this._http.get<ProductModel[]>(`${this.API}/Products`).pipe(first());
+  }
+  getAllProductWithImagesAsync(): Observable<ProductModel[]> {
+    return this._http
+      .get<ProductModel[]>(`${this.API}/ProductsWithImages`)
+      .pipe(first());
   }
   getByIdAsync(key: string): Observable<ProductModel> {
-    return this._http.get<ProductModel>(`${this.API}/${key}`).pipe(first());
+    return this._http
+      .get<ProductModel>(`${this.API}/Products/${key}`)
+      .pipe(first());
   }
   store(product: ProductModel): Observable<any> {
-    return this._http.post(this.API, product);
+    const url: string = `${this.API}/Products`;
+    return this._http.post(url, product);
   }
   storeImages(product: ProductModel, key: string): Observable<any> {
     if (!product.image)
@@ -35,6 +43,12 @@ export class ProductService {
       const element = product.image.item(index);
       formData.append('files', element as Blob);
     }
-    return this._http.post(`${this.API}/Images?productKey=${key}`, formData);
+    return this._http.post(
+      `${this.API}/Products/Images?productKey=${key}`,
+      formData
+    );
+  }
+  deleteProductAsync(key: string) {
+    return this._http.delete(`${this.API}/Products/${key}`);
   }
 }

@@ -8,9 +8,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
+import { AskDialogComponent } from 'src/app/shared/ask-dialog/ask-dialog.component';
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ProductService } from '../product.service';
 
@@ -24,6 +26,7 @@ export class ProductAddEditComponent implements OnInit {
   product: ProductModel = new ProductModel();
   loading: boolean = true;
   hasImage: boolean = false;
+  isEditing: boolean = false;
 
   matcher = new MyErrorStateMatcher();
   constructor(
@@ -31,7 +34,8 @@ export class ProductAddEditComponent implements OnInit {
     private readonly _router: Router,
     private readonly _formBuilder: FormBuilder,
     private readonly _productService: ProductService,
-    private _snackBar: MatSnackBar
+    private readonly _snackBar: MatSnackBar,
+    private readonly _askDialog: MatDialog
   ) {
     this.form = this._formBuilder.group({
       shortName: [
@@ -77,10 +81,15 @@ export class ProductAddEditComponent implements OnInit {
       )
       .subscribe({
         next: (product) => {
+          this.product = product;
           this.updateForm(product);
-          this.changeLoading(false);
+          this.changeLoadingStatus(false);
+          this.isEditing = true;
         },
-        error: () => this.changeLoading(false),
+        error: () => {
+          this.changeLoadingStatus(false);
+          this.goBack();
+        },
       }); // monta os dados no formulario
   }
 
@@ -89,34 +98,40 @@ export class ProductAddEditComponent implements OnInit {
     this._router.navigate(['product']);
   }
   onSubmit() {
-    this.changeLoading(true);
+    this.changeLoadingStatus(true);
     this.buildObject();
     this._productService.store(this.product).subscribe({
       next: (data: ProductModel) => {
         this.saveImages(data.key!);
         this.goBack();
       },
-      error: (err) => {
-        this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
-          duration: 3000,
-        });
-        this.changeLoading(false);
+      error: (error) => {
+        this.showMessege('Erro ao salvar os dados', error);
+        this.changeLoadingStatus(false);
       },
-      complete: () => this.changeLoading(false),
+      complete: () => this.changeLoadingStatus(false),
+    });
+  }
+  onDelete() {
+    if (!this.product.key) return;
+    const key: string = this.product.key!;
+
+    this.openDialog('deseja excluir?').subscribe({
+      next: (canDelete) => {
+        if (canDelete) {
+          this.changeLoadingStatus(true);
+          this.delete(key);
+        }
+      },
     });
   }
   saveImages(key: string): void {
     this._productService.storeImages(this.product, key).subscribe({
-      next: (data) => {
-        this._snackBar.open('Dados salvo com sucesso!!!', 'Sucesso', {
-          duration: 3000,
-        });
+      next: () => {
+        this.showMessege('Dados salvo com sucesso!!!');
       },
       error: (err) => {
-        console.warn(err);
-        this._snackBar.open('Erro ao salvar os dados', 'Aviso', {
-          duration: 3000,
-        });
+        this.showMessege('Erro ao salvar os dados', err);
       },
       complete: () => this.goBack(),
     });
@@ -150,14 +165,39 @@ export class ProductAddEditComponent implements OnInit {
       priceMarket: product.priceMarket,
       note: product.note,
       image: product.image,
+      key: product.key,
     });
   }
-  private changeLoading(state: boolean): void {
+  private changeLoadingStatus(state: boolean): void {
     this.loading = state;
   }
 
   private reset(): void {
     this.form.reset();
+  }
+  private delete(key: string) {
+    this._productService.deleteProductAsync(key).subscribe({
+      next: () => {
+        this.showMessege('Exluido com sucesso');
+        this.goBack();
+      },
+      error: (error) => {
+        this.showMessege('Erro ao deletar os dados', error);
+        this.changeLoadingStatus(false);
+      },
+      complete: () => this.changeLoadingStatus(false),
+    });
+  }
+  private openDialog(messege: string): Observable<boolean> {
+    return this._askDialog
+      .open(AskDialogComponent, { data: messege })
+      .afterClosed();
+  }
+  private showMessege(message: string, error?: any): void {
+    this._snackBar.open(message, 'Aviso', {
+      duration: 3000,
+    });
+    console.warn(error);
   }
   //#endregion
 }
