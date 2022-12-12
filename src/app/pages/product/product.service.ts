@@ -48,4 +48,7 @@ export class ProductService {
       formData
     );
   }
+  deleteProductAsync(key: string) {
+    return this._http.delete(`${this.API}/Products/${key}`);
+  }
 }

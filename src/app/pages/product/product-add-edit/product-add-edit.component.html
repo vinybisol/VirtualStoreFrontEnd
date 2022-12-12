@@ -107,6 +107,16 @@
 
 <div class="back-button-container">
   <button
+    *ngIf="isEditing"
+    mat-fab
+    color="warn"
+    class="button"
+    (click)="onDelete()"
+    aria-label="delete button"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button
     *ngIf="form.valid"
     mat-fab
     color="primary"

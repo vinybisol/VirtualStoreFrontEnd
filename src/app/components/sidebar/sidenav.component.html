@@ -8,13 +8,14 @@
         <a
           *ngFor="let nav of navData"
           mat-list-item
+          (isActiveChange)="toggleCollapse()"
           [routerLink]="[nav.routeLink]"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           >{{ nav.label }}</a
         >
-      </mat-nav-list></mat-drawer
-    >
+      </mat-nav-list>
+    </mat-drawer>
     <mat-drawer-content>
       <app-body></app-body>
     </mat-drawer-content>

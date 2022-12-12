@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { catchError, Observable, of, Subject } from 'rxjs';
+import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { ProductService } from '../../product/product.service';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
@@ -19,9 +21,15 @@ export class EcommerceCardComponent implements OnInit {
 
   constructor(
     private readonly _ecommerceService: EcommerceService,
-    private readonly _productService: ProductService
+    private readonly _productService: ProductService,
+    private readonly _dialog: MatDialog
   ) {
-    this.products$ = this._productService.getAllProductWithImagesAsync();
+    this.products$ = this._productService.getAllProductWithImagesAsync().pipe(
+      catchError(() => {
+        this.openDialog('Erro ao carregar os produtos');
+        return of([]);
+      })
+    );
   }
 
   ngOnInit(): void {
@@ -60,6 +68,11 @@ export class EcommerceCardComponent implements OnInit {
   //#region Metodos Privados
   private perPage(windowSize: number): number {
     return Math.round(windowSize / 400);
+  }
+  private openDialog(messege: string) {
+    this._dialog.open(ErrorDialogComponent, {
+      data: messege,
+    });
   }
   //#endregion
 }
