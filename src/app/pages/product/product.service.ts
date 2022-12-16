@@ -40,7 +40,7 @@ export class ProductService {
 
     const formData = new FormData();
     for (let index = 0; index < product.image.length; index++) {
-      const element = product.image.item(index);
+      const element = product.image[index];
       formData.append('files', element as Blob);
     }
     return this._http.post(
