@@ -6,8 +6,8 @@ export class ProductModel {
   public priceMarket: number = 0;
   public note: string = '';
   public inCart: boolean = false;
-  public image?: FileList;
-  public images?: Image[];
+  public image?: File[] = [];
+  public images?: Image[] = undefined;
   constructor() {}
 }
 interface Image {

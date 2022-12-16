@@ -11,9 +11,10 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap, take } from 'rxjs';
 import { AskDialogComponent } from 'src/app/shared/ask-dialog/ask-dialog.component';
 import { ProductModel } from '../../ecommerce/model/product-model';
+import { ImageCompressService } from '../image-compress.service';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -35,7 +36,8 @@ export class ProductAddEditComponent implements OnInit {
     private readonly _formBuilder: FormBuilder,
     private readonly _productService: ProductService,
     private readonly _snackBar: MatSnackBar,
-    private readonly _askDialog: MatDialog
+    private readonly _askDialog: MatDialog,
+    private readonly compressImage: ImageCompressService
   ) {
     this.form = this._formBuilder.group({
       shortName: [
@@ -142,8 +144,21 @@ export class ProductAddEditComponent implements OnInit {
       const element = event.target as HTMLInputElement;
       if (element.files) {
         const files: FileList = element.files;
-        this.form.controls['image'].patchValue(files);
-        this.form.controls['image'].updateValueAndValidity();
+        for (let index = 0; index < files.length; index++) {
+          const image = files[index];
+          console.log(`Image size before compressed: ${image.size} bytes.`);
+
+          this.compressImage
+            .compress(image)
+            .pipe(take(1))
+            .subscribe((compressedImage) => {
+              console.log(
+                `Image size after compressed: ${compressedImage.size} bytes.`
+              );
+              // now you can do upload the compressed image
+              this.product.image?.push(compressedImage);
+            });
+        }
       }
     }
   }
