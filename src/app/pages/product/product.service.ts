@@ -30,7 +30,7 @@ export class ProductService {
     return this._http.post(url, product);
   }
   storeImages(product: ProductModel, key: string): Observable<any> {
-    if (!product.image)
+    if (!product.images)
       return throwError(() => {
         return {
           messege: 'Não existem images para enviar ao servidor',
@@ -39,12 +39,19 @@ export class ProductService {
       });
 
     const formData = new FormData();
-    for (let index = 0; index < product.image.length; index++) {
-      const element = product.image[index];
-      formData.append('files', element as Blob);
+    formData.append('Name', product.name);
+    formData.append('ShortName', product.shortName);
+    formData.append('Price', product.price.toString());
+    formData.append('PriceMarket', product.priceMarket.toString());
+    formData.append('Note', product.note);
+    for (let index = 0; index < product.images.length; index++) {
+      const element = product.images[index];
+      formData.append('images', element as Blob);
     }
+    console.log(formData);
+
     return this._http.post(
-      `${this.API}/Products/Images?productKey=${key}`,
+      `${this.API}/ProductsWithImages?productKey=${key}`,
       formData
     );
   }

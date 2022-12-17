@@ -66,7 +66,7 @@ export class ProductAddEditComponent implements OnInit {
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
       note: [this.product.note],
-      image: [this.product.image],
+      image: [this.product.images],
     });
   }
 
@@ -102,16 +102,26 @@ export class ProductAddEditComponent implements OnInit {
   onSubmit() {
     this.changeLoadingStatus(true);
     this.buildObject();
-    this._productService.store(this.product).subscribe({
-      next: (data: ProductModel) => {
-        this.saveImages(data.key!);
-        this.goBack();
-      },
-      error: (error) => {
-        this.showMessege('Erro ao salvar os dados', error);
+    // this._productService.store(this.product).subscribe({
+    //   next: (data: ProductModel) => {
+    //     this.saveImages(data.key!);
+    //     this.goBack();
+    //   },
+    //   error: (error) => {
+    //     this.showMessege('Erro ao salvar os dados', error);
+    //     this.changeLoadingStatus(false);
+    //   },
+    //   complete: () => this.changeLoadingStatus(false),
+    // });
+    this._productService.storeImages(this.product, '').subscribe({
+      next: (data) => {
+        console.log(data);
         this.changeLoadingStatus(false);
       },
-      complete: () => this.changeLoadingStatus(false),
+      error: (error) => {
+        console.log(error);
+        this.changeLoadingStatus(false);
+      },
     });
   }
   onDelete() {
@@ -156,7 +166,7 @@ export class ProductAddEditComponent implements OnInit {
                 `Image size after compressed: ${compressedImage.size} bytes.`
               );
               // now you can do upload the compressed image
-              this.product.image?.push(compressedImage);
+              this.product.images?.push(compressedImage);
             });
         }
       }
@@ -170,7 +180,7 @@ export class ProductAddEditComponent implements OnInit {
     this.product.price = this.form.value.price;
     this.product.priceMarket = this.form.value.priceMarket;
     this.product.note = this.form.value.note;
-    this.product.image = this.form.value.image;
+    this.product.images = this.form.value.image;
   }
   private updateForm(product: ProductModel): void {
     this.form.patchValue({
@@ -179,7 +189,7 @@ export class ProductAddEditComponent implements OnInit {
       price: product.price,
       priceMarket: product.priceMarket,
       note: product.note,
-      image: product.image,
+      image: product.images,
       key: product.key,
     });
   }
