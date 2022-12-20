@@ -66,7 +66,7 @@ export class ProductAddEditComponent implements OnInit {
         [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')],
       ],
       note: [this.product.note],
-      image: [this.product.image],
+      image: [this.product.images],
     });
   }
 
@@ -78,6 +78,7 @@ export class ProductAddEditComponent implements OnInit {
           if (!key) {
             return of<ProductModel>(this.product);
           }
+          this.isEditing = true;
           return this._productService.getByIdAsync(key);
         }) // passa um valor zerado ou pega os dados no servidor
       )
@@ -86,10 +87,10 @@ export class ProductAddEditComponent implements OnInit {
           this.product = product;
           this.updateForm(product);
           this.changeLoadingStatus(false);
-          this.isEditing = true;
         },
         error: () => {
           this.changeLoadingStatus(false);
+          this.isEditing = false;
           this.goBack();
         },
       }); // monta os dados no formulario
@@ -102,17 +103,12 @@ export class ProductAddEditComponent implements OnInit {
   onSubmit() {
     this.changeLoadingStatus(true);
     this.buildObject();
-    this._productService.store(this.product).subscribe({
-      next: (data: ProductModel) => {
-        this.saveImages(data.key!);
-        this.goBack();
-      },
-      error: (error) => {
-        this.showMessege('Erro ao salvar os dados', error);
-        this.changeLoadingStatus(false);
-      },
-      complete: () => this.changeLoadingStatus(false),
-    });
+    if (this.isEditing) {
+      this.update();
+    } else {
+      this.save();
+    }
+    this.goBack();
   }
   onDelete() {
     if (!this.product.key) return;
@@ -125,17 +121,6 @@ export class ProductAddEditComponent implements OnInit {
           this.delete(key);
         }
       },
-    });
-  }
-  saveImages(key: string): void {
-    this._productService.storeImages(this.product, key).subscribe({
-      next: () => {
-        this.showMessege('Dados salvo com sucesso!!!');
-      },
-      error: (err) => {
-        this.showMessege('Erro ao salvar os dados', err);
-      },
-      complete: () => this.goBack(),
     });
   }
 
@@ -170,7 +155,7 @@ export class ProductAddEditComponent implements OnInit {
     this.product.price = this.form.value.price;
     this.product.priceMarket = this.form.value.priceMarket;
     this.product.note = this.form.value.note;
-    this.product.image = this.form.value.image;
+    this.product.images = this.form.value.image;
   }
   private updateForm(product: ProductModel): void {
     this.form.patchValue({
@@ -179,7 +164,7 @@ export class ProductAddEditComponent implements OnInit {
       price: product.price,
       priceMarket: product.priceMarket,
       note: product.note,
-      image: product.image,
+      image: product.images,
       key: product.key,
     });
   }
@@ -189,6 +174,55 @@ export class ProductAddEditComponent implements OnInit {
 
   private reset(): void {
     this.form.reset();
+  }
+  private save() {
+    this._productService
+      .store(this.product) //guarda os dados do cadatro no banco de dados
+      .pipe(
+        take(1),
+        switchMap((product: ProductModel) => {
+          if (product.key && this.product.image.length > 0) {
+            return this.saveImage(product.key); //se deu certo ele envia as imagens para o servidor
+          }
+          return of(product);
+        })
+      )
+      .subscribe({
+        error: (err) => {
+          this.changeLoadingStatus(false);
+          this.showMessege('Erro ao criar o registro!');
+          console.log(err);
+        },
+        complete: () => {
+          this.changeLoadingStatus(false);
+          this.showMessege('Registro criado com sucesso!');
+        },
+      });
+  }
+  private update() {
+    const key: string = this.product.key!;
+    this._productService
+      .updateProductAsync(this.product, key) //guarda os dados do cadatro no banco de dados
+      .pipe(
+        take(1),
+        switchMap(() => {
+          if (this.product.image.length > 0) {
+            return this.saveImage(key); //se deu certo ele envia as imagens para o servidor
+          }
+          return of();
+        })
+      )
+      .subscribe({
+        error: (err) => {
+          this.changeLoadingStatus(false);
+          this.showMessege('Erro ao criar o registro!');
+          console.log(err);
+        },
+        complete: () => {
+          this.changeLoadingStatus(false);
+          this.showMessege('Registro criado com sucesso!');
+        },
+      });
   }
   private delete(key: string) {
     this._productService.deleteProductAsync(key).subscribe({
@@ -202,6 +236,9 @@ export class ProductAddEditComponent implements OnInit {
       },
       complete: () => this.changeLoadingStatus(false),
     });
+  }
+  private saveImage(key: string): Observable<any> {
+    return this._productService.storeImages(this.product, key);
   }
   private openDialog(messege: string): Observable<boolean> {
     return this._askDialog
