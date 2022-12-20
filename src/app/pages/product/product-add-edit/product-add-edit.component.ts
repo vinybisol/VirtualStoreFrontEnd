@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, of, switchMap, take } from 'rxjs';
 import { AskDialogComponent } from 'src/app/shared/ask-dialog/ask-dialog.component';
+
 import { ProductModel } from '../../ecommerce/model/product-model';
 import { ImageCompressService } from '../image-compress.service';
 import { ProductService } from '../product.service';
@@ -108,7 +109,6 @@ export class ProductAddEditComponent implements OnInit {
     } else {
       this.save();
     }
-    this.goBack();
   }
   onDelete() {
     if (!this.product.key) return;
@@ -189,13 +189,10 @@ export class ProductAddEditComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          this.changeLoadingStatus(false);
-          this.showMessege('Erro ao criar o registro!');
-          console.log(err);
+          this.onError('Erro ao criar o registro!', err);
         },
         complete: () => {
-          this.changeLoadingStatus(false);
-          this.showMessege('Registro criado com sucesso!');
+          this.onSucess('Registro criado com sucesso!');
         },
       });
   }
@@ -214,13 +211,10 @@ export class ProductAddEditComponent implements OnInit {
       )
       .subscribe({
         error: (err) => {
-          this.changeLoadingStatus(false);
-          this.showMessege('Erro ao criar o registro!');
-          console.log(err);
+          this.onError('Erro ao criar o registro!', err);
         },
         complete: () => {
-          this.changeLoadingStatus(false);
-          this.showMessege('Registro criado com sucesso!');
+          this.onSucess('Registro atualizado com sucesso!');
         },
       });
   }
@@ -250,6 +244,17 @@ export class ProductAddEditComponent implements OnInit {
       duration: 3000,
     });
     console.warn(error);
+  }
+  private onSucess(messege: string) {
+    this.changeLoadingStatus(false);
+    this.showMessege(messege);
+    this.goBack();
+  }
+  private onError(message: string, err: any) {
+    this.changeLoadingStatus(false);
+    this.showMessege(message);
+    console.log(err);
+    this.goBack();
   }
   //#endregion
 }
