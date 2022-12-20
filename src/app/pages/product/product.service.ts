@@ -25,12 +25,12 @@ export class ProductService {
       .get<ProductModel>(`${this.API}/Products/${key}`)
       .pipe(first());
   }
-  store(product: ProductModel): Observable<any> {
+  store(product: ProductModel): Observable<ProductModel> {
     const url: string = `${this.API}/Products`;
-    return this._http.post(url, product);
+    return this._http.post<ProductModel>(url, product);
   }
   storeImages(product: ProductModel, key: string): Observable<any> {
-    if (!product.images)
+    if (!product.image)
       return throwError(() => {
         return {
           messege: 'Não existem images para enviar ao servidor',
@@ -39,21 +39,17 @@ export class ProductService {
       });
 
     const formData = new FormData();
-    formData.append('Name', product.name);
-    formData.append('ShortName', product.shortName);
-    formData.append('Price', product.price.toString());
-    formData.append('PriceMarket', product.priceMarket.toString());
-    formData.append('Note', product.note);
-    for (let index = 0; index < product.images.length; index++) {
-      const element = product.images[index];
-      formData.append('images', element as Blob);
+    for (let index = 0; index < product.image.length; index++) {
+      const element = product.image[index];
+      formData.append('files', element as Blob);
     }
-    console.log(formData);
-
     return this._http.post(
-      `${this.API}/ProductsWithImages?productKey=${key}`,
+      `${this.API}/Products/Images?productKey=${key}`,
       formData
     );
+  }
+  updateProductAsync(product: ProductModel, key: string): Observable<any> {
+    return this._http.put(`${this.API}/Products/${key}`, product);
   }
   deleteProductAsync(key: string) {
     return this._http.delete(`${this.API}/Products/${key}`);

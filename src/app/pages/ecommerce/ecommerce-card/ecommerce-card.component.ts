@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, Observable, of, Subject } from 'rxjs';
+import { catchError, map, Observable, of, Subject } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 import { ProductService } from '../../product/product.service';
 import { EcommerceService } from '../ecommerce.service';
@@ -25,6 +25,10 @@ export class EcommerceCardComponent implements OnInit {
     private readonly _dialog: MatDialog
   ) {
     this.products$ = this._productService.getAllProductWithImagesAsync().pipe(
+      map((data) => {
+        console.log(data);
+        return data;
+      }),
       catchError(() => {
         this.openDialog('Erro ao carregar os produtos');
         return of([]);
