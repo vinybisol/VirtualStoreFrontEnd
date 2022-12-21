@@ -90,8 +90,7 @@
       mat-raised-button
       (click)="fileInput.click()"
     >
-      <mat-icon *ngIf="!hasImage">arrow_upward</mat-icon>
-      <mat-icon *ngIf="hasImage">check</mat-icon>
+      <mat-icon>arrow_upward</mat-icon>
     </button>
     <mat-label> Upload imagen</mat-label>
     <input
@@ -102,6 +101,11 @@
       multiple
       accept="image/*"
     />
+    <br />
+    <br />
+    <div *ngFor="let image of product.image">
+      <span>{{ image.name }}</span>
+    </div>
   </div>
 </form>
 

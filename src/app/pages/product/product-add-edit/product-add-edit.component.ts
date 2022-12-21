@@ -26,7 +26,6 @@ export class ProductAddEditComponent implements OnInit {
   form: FormGroup;
   product: ProductModel = new ProductModel();
   loading: boolean = true;
-  hasImage: boolean = false;
   isEditing: boolean = false;
 
   matcher = new MyErrorStateMatcher();
@@ -85,6 +84,7 @@ export class ProductAddEditComponent implements OnInit {
       .subscribe({
         next: (product) => {
           this.product = product;
+          this.product.image = [];
           this.updateForm(product);
           this.changeLoadingStatus(false);
         },
@@ -141,7 +141,8 @@ export class ProductAddEditComponent implements OnInit {
                 `Image size after compressed: ${compressedImage.size} bytes.`
               );
               // now you can do upload the compressed image
-              this.product.image?.push(compressedImage);
+              this.product.image.push(compressedImage);
+              console.log(this.product.image);
             });
         }
       }

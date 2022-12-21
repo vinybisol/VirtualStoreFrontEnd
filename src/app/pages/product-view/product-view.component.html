@@ -1,0 +1,25 @@
+<p>product-view works!</p>
+<p>Aqui vamos colocar o produtdo para ver ele</p>
+
+<mat-card>
+  <mat-card-title-group>
+    <mat-card-title>cvolocar o shiba aqui</mat-card-title>
+  </mat-card-title-group>
+  <mat-card-header>aqui vai o subtitulo</mat-card-header>
+  <mat-card-content>
+    <div class="div__image">
+      <img
+        class="mdc-card__sem__media"
+        *ngIf="product.images?.length === 0"
+        src="assets\ecommerce\semimagem.png"
+        alt="sem imagem"
+      />
+      <img
+        class="mdc-card__media"
+        *ngFor="let image of product.images"
+        src="{{ 'data:image/jpg;base64,' + image.image }}"
+        alt="Photo of a Shiba Inu"
+      />
+    </div>
+  </mat-card-content>
+</mat-card>

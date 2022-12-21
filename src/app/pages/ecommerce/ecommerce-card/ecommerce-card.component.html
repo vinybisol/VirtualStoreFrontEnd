@@ -2,30 +2,41 @@
 
 <div *ngIf="products$ | async as products; else loading">
   <div class="card-box">
-    <mat-card class="card" *ngFor="let product of products">
-      <mat-card-title class="card-title">{{ product.name }}</mat-card-title>
+    <mat-card
+      (click)="goTo(product.key!)"
+      class="card"
+      *ngFor="let product of products"
+    >
+      <mat-card-title class="card-title">{{
+        product.shortName
+      }}</mat-card-title>
       <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
-      <div class="div__image">
-        <img
-          class="mdc-card__sem__media"
-          *ngIf="product.images?.length === 0"
-          src="assets\ecommerce\semimagem.png"
-          alt="sem imagem"
-        />
-        <img
-          class="mdc-card__media"
-          *ngFor="let image of product.images"
-          src="{{ 'data:image/jpg;base64,' + image.image }}"
-          alt="Photo of a Shiba Inu"
-        />
-      </div>
+
+      <mat-card-content>
+        <div class="div__image">
+          <img
+            class="mdc-card__sem__media"
+            *ngIf="product.images?.length === 0"
+            src="assets\ecommerce\semimagem.png"
+            alt="sem imagem"
+          />
+          <img
+            class="mdc-card__media"
+            *ngFor="let image of product.images"
+            src="{{ 'data:image/jpg;base64,' + image.image }}"
+            alt="Photo of a Shiba Inu"
+          />
+        </div>
+      </mat-card-content>
 
       <mat-card-title>
         {{ product.price | currency : "BRL" }}
       </mat-card-title>
-      {{ product.priceMarket | currency : "BRL" }}
 
-      <small>valor de mercado</small>
+      <mat-card-subtitle>
+        {{ product.priceMarket | currency : "BRL" }}
+        <small>valor de mercado</small>
+      </mat-card-subtitle>
 
       <mat-card-content>
         {{ product.note }}

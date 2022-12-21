@@ -7,6 +7,7 @@ import { EcommerceCardComponent } from './ecommerce/ecommerce-card/ecommerce-car
 import { EcommerceHeaderComponent } from './ecommerce/ecommerce-header/ecommerce-header.component';
 import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
+import { ProductViewModule } from './product-view/product-view.module';
 import { ProductModule } from './product/product.module';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ProductModule } from './product/product.module';
     SharedModule,
     ReactiveFormsModule,
     ProductModule,
+    ProductViewModule,
   ],
   exports: [],
 })
