@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { catchError, Observable, of, Subject } from 'rxjs';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
+
 import { ProductService } from '../../product/product.service';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
@@ -27,10 +28,6 @@ export class EcommerceCardComponent implements OnInit {
     private readonly _router: Router
   ) {
     this.products$ = this._productService.getAllProductWithImagesAsync().pipe(
-      map((data) => {
-        console.log(data);
-        return data;
-      }),
       catchError(() => {
         this.openDialog('Erro ao carregar os produtos');
         return of([]);
