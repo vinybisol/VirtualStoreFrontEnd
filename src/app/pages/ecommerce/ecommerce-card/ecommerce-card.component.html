@@ -2,11 +2,7 @@
 
 <div *ngIf="products$ | async as products; else loading">
   <div class="card-box">
-    <mat-card
-      (click)="goTo(product.key!)"
-      class="card"
-      *ngFor="let product of products"
-    >
+    <mat-card class="card" *ngFor="let product of products">
       <mat-card-title class="card-title">{{
         product.shortName
       }}</mat-card-title>
@@ -43,14 +39,7 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button
-          mat-raised-button
-          [disabled]="product.inCart"
-          (click)="addInCartShopping(product)"
-          color="primary"
-        >
-          {{ product.inCart ? "No Carrinho" : "Comprar" }}
-        </button>
+        <button mat-button (click)="goTo(product.key!)">Detalhes</button>
       </mat-card-actions>
     </mat-card>
   </div>
