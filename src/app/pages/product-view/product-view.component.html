@@ -1,32 +1,23 @@
-<mat-card>
-  <mat-card-title-group>
-    <mat-card-title>{{ product.shortName }}</mat-card-title>
-  </mat-card-title-group>
-  <mat-card-header>{{ product.name }}</mat-card-header>
-  <mat-card-content>
-    <div class="div__image">
-      <img
-        class="mdc-card__sem__media"
-        *ngIf="product.images?.length === 0"
-        src="assets\ecommerce\semimagem.png"
-        alt="sem imagem"
-      />
-      <img
-        class="mdc-card__media"
-        *ngFor="let image of product.images"
-        src="{{ 'data:image/jpg;base64,' + image.image }}"
-        alt="Photo of a Shiba Inu"
-      />
-    </div>
-  </mat-card-content>
-  <mat-card-footer>
-    <mat-card-title>
-      {{ product.price | currency : "BRL" }}
-    </mat-card-title>
+<div class="card-box">
+  <mat-card class="card">
+    <mat-card-title-group>
+      <mat-card-title>{{ product.shortName }}</mat-card-title>
+    </mat-card-title-group>
+    <mat-card-header>{{ product.name }}</mat-card-header>
+    <mat-card-content>
+      <div class="div__image">
+        <app-product-carousel [slides]="slides"></app-product-carousel>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-card-title>
+        {{ product.price | currency : "BRL" }}
+      </mat-card-title>
 
-    <mat-card-subtitle>
-      {{ product.priceMarket | currency : "BRL" }}
-      <small>valor de mercado</small>
-    </mat-card-subtitle></mat-card-footer
-  >
-</mat-card>
+      <mat-card-subtitle>
+        {{ product.priceMarket | currency : "BRL" }}
+        <small>valor de mercado</small>
+      </mat-card-subtitle></mat-card-footer
+    >
+  </mat-card>
+</div>

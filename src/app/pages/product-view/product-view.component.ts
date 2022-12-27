@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map, of, switchMap } from 'rxjs';
 import { ProductModel } from '../ecommerce/model/product-model';
 import { ProductService } from '../product/product.service';
+import { ProductCarouselInterface } from './product-carousel/types/product-carousel.interface';
 
 @Component({
   selector: 'app-product-view',
@@ -12,6 +13,8 @@ import { ProductService } from '../product/product.service';
 export class ProductViewComponent implements OnInit {
   product: ProductModel = new ProductModel();
   loading: boolean = false;
+
+  slides: ProductCarouselInterface[] = [];
 
   constructor(
     private readonly _route: ActivatedRoute,
@@ -33,6 +36,12 @@ export class ProductViewComponent implements OnInit {
       .subscribe({
         next: (product) => {
           this.product = product;
+          product.images?.forEach((image) => {
+            this.slides.push({
+              url: 'data:image/jpg;base64,' + image.image,
+              title: image.key,
+            });
+          });
           this.changeLoadingStatus(false);
         },
         error: () => {
