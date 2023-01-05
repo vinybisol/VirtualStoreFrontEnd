@@ -9,12 +9,14 @@ import { HomeComponent } from './home/home.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { ProductViewModule } from './product-view/product-view.module';
 import { ProductModule } from './product/product.module';
+import { CounterComponent } from './counter/counter.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     EcommerceCardComponent,
     EcommerceHeaderComponent,
+    CounterComponent,
   ],
   imports: [
     CommonModule,

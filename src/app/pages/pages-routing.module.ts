@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CounterComponent } from './counter/counter.component';
 
 import { EcommerceCardComponent } from './ecommerce/ecommerce-card/ecommerce-card.component';
 
 const routes: Routes = [
   { path: '', component: EcommerceCardComponent },
+  { path: 'counter', component: CounterComponent },
   { path: 'ecommerce-card', component: EcommerceCardComponent },
   {
     path: 'product',

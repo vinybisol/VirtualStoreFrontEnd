@@ -1,0 +1,10 @@
+<div class="container">
+  <button (click)="getAllProducts()">Increment</button>
+
+  <div *ngIf="count$ | async as counts">
+    <div *ngFor="let count of counts">
+      Current Count: {{ count.name }}, name: {{ count.shortName }}, senha:
+      {{ count.price }}
+    </div>
+  </div>
+</div>
