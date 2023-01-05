@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { catchError, Observable, of, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { first, Observable, Subject } from 'rxjs';
+import { getAllProducts } from 'src/app/actions/counter';
+import { ArticleState } from 'src/app/reducers/counter.reducer';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
 import { ProductService } from '../../product/product.service';
@@ -16,7 +19,7 @@ import { ProductModel } from '../model/product-model';
 })
 export class EcommerceCardComponent implements OnInit {
   public total$: Subject<number> = new Subject<number>();
-  public products$: Observable<ProductModel[]>;
+  count$: Observable<ArticleState> = this._store.select((state) => state.count);
   private cartShopping: CartShoppingModel = new CartShoppingModel();
   public breakpoint: number = 0;
   public loading: boolean = false;
@@ -25,15 +28,11 @@ export class EcommerceCardComponent implements OnInit {
     private readonly _ecommerceService: EcommerceService,
     private readonly _productService: ProductService,
     private readonly _dialog: MatDialog,
-    private readonly _router: Router
-  ) {
-    this.products$ = this._productService.getAllProductWithImagesAsync().pipe(
-      catchError(() => {
-        this.openDialog('Erro ao carregar os produtos');
-        return of([]);
-      })
-    );
-  }
+    private readonly _router: Router,
+    private _store: Store<{
+      count: ArticleState;
+    }>
+  ) {}
 
   ngOnInit(): void {
     this.breakpoint = this.perPage(window.innerWidth);
@@ -43,6 +42,12 @@ export class EcommerceCardComponent implements OnInit {
         this.clearCartShopping();
       },
     });
+    this._store
+      .select('count')
+      .pipe(first())
+      .subscribe((state) => {
+        if (state.products.length === 0) this._store.dispatch(getAllProducts());
+      });
   }
 
   addInCartShopping(product: ProductModel): void {

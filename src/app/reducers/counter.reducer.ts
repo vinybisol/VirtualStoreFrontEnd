@@ -1,17 +1,21 @@
 import { createReducer, on } from '@ngrx/store';
-import { getAllProducts } from '../actions/counter';
+import * as fromActions from '../actions/counter';
 import { ProductModel } from '../pages/ecommerce/model/product-model';
 
-export const initialState: ProductModel[] = [
-  new ProductModel(),
-  new ProductModel(),
-];
+export const initialState: ArticleState = { products: [], message: '' };
 
 export const counterReducer = createReducer(
   initialState,
-  on(getAllProducts, (state, product) => {
-    console.log(state);
-    console.log(product.type);
-    return product;
-  })
+  on(fromActions.getAllProductsSuccess, (state, { product }) => ({
+    products: product,
+    message: 'Success',
+  }))
 );
+export interface AppState {
+  articleState: ArticleState;
+}
+
+export interface ArticleState {
+  products: ProductModel[];
+  message: any;
+}

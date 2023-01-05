@@ -1,23 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, EMPTY, map, mergeMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
+import * as fromActions from '../actions/counter';
 import { ProductService } from '../pages/product/product.service';
 
 @Injectable()
 export class CounterEffectService {
   counter$ = createEffect(() =>
     this.action$.pipe(
-      ofType('[Ecommerce Component] GetAllProducts'),
-      mergeMap(() =>
+      ofType(fromActions.getAllProducts),
+      switchMap(() =>
         this._productService.getAllProductWithImagesAsync().pipe(
-          map((product) => {
-            console.log(product);
+          map((data) => {
+            console.log(data);
 
-            return { type: '[Ecommerce Component] GetAllProducts', product };
+            return fromActions.getAllProductsSuccess({ product: data });
           }),
-          catchError((erro) => {
-            console.log(erro);
-            return EMPTY;
+          catchError((error) => {
+            console.log(error);
+            return of(fromActions.getAllProductsSuccess({ product: [] }));
           })
         )
       )

@@ -9,4 +9,9 @@ export const menuNavbarData = [
     icon: 'fal fa-box-open',
     label: 'Produtos',
   },
+  {
+    routeLink: 'counter',
+    icon: 'fal fa-box-open',
+    label: 'Counter',
+  },
 ];

@@ -1,22 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
 import { getAllProducts } from 'src/app/actions/counter';
-import { ProductModel } from '../ecommerce/model/product-model';
+import { ArticleState } from 'src/app/reducers/counter.reducer';
 
 @Component({
   selector: 'app-counter',
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.scss'],
 })
-export class CounterComponent {
-  count$: Observable<ProductModel[]> = this.store.select('count');
+export class CounterComponent implements OnInit {
+  count$: Observable<ArticleState> = this.store.select((state) => state.count);
   constructor(
     private store: Store<{
-      count: ProductModel[];
+      count: ArticleState;
     }>
   ) {}
+
+  ngOnInit() {
+    this.store
+      .select('count')
+      .pipe(first())
+      .subscribe((state) => {
+        if (state.products.length === 0) this.store.dispatch(getAllProducts());
+      });
+  }
+
   getAllProducts() {
     this.store.dispatch(getAllProducts());
+    console.log(this.count$);
   }
 }

@@ -1,8 +1,8 @@
 <app-ecommerce-header></app-ecommerce-header>
 
-<div *ngIf="products$ | async as products; else loading">
+<div *ngIf="count$ | async as products; else loading">
   <div class="card-box">
-    <mat-card class="card" *ngFor="let product of products">
+    <mat-card class="card" *ngFor="let product of products.products">
       <mat-card-title class="card-title">{{
         product.shortName
       }}</mat-card-title>
