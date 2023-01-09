@@ -7,7 +7,6 @@ import { getAllProducts } from 'src/app/actions/counter';
 import { ArticleState } from 'src/app/reducers/counter.reducer';
 import { ErrorDialogComponent } from 'src/app/shared/error-dialog/error-dialog.component';
 
-import { ProductService } from '../../product/product.service';
 import { EcommerceService } from '../ecommerce.service';
 import { CartShoppingModel } from '../model/cart-shopping-model';
 import { ProductModel } from '../model/product-model';
@@ -26,7 +25,6 @@ export class EcommerceCardComponent implements OnInit {
 
   constructor(
     private readonly _ecommerceService: EcommerceService,
-    private readonly _productService: ProductService,
     private readonly _dialog: MatDialog,
     private readonly _router: Router,
     private _store: Store<{

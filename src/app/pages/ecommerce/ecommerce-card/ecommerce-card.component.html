@@ -1,6 +1,6 @@
 <app-ecommerce-header></app-ecommerce-header>
 
-<div *ngIf="count$ | async as products; else loading">
+<div *ngIf="count$ | async as products">
   <div class="card-box">
     <mat-card class="card" *ngFor="let product of products.products">
       <mat-card-title class="card-title">{{
@@ -43,9 +43,9 @@
       </mat-card-actions>
     </mat-card>
   </div>
-</div>
 
-<!--Loading-->
-<ng-template #loading>
-  <app-mat-spinner-overlay></app-mat-spinner-overlay>
-</ng-template>
+  <!--Loading-->
+  <div *ngIf="products.products.length === 0">
+    <app-mat-spinner-overlay></app-mat-spinner-overlay>
+  </div>
+</div>
