@@ -1,7 +1,7 @@
 const proxy = [
   {
     context: "/api",
-    target: "https://virtual-store-backend.azurewebsites.net",
+    target: "https://virtualstorefunctions.azurewebsites.net",
     pathRewrite: { "^/api": "/api" },
     secure: false,
     logLevel: "debug",
