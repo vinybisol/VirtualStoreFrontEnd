@@ -13,7 +13,9 @@ export class ProductService {
   constructor(private readonly _http: HttpClient) {}
 
   getAllProductAsync(): Observable<ProductModel[]> {
-    return this._http.get<ProductModel[]>(`${this.API}/Products`).pipe(first());
+    const url: string = `${this.API}/product/getall`;
+    return this._http.get<ProductModel[]>(url)
+    .pipe(first());
   }
   getAllProductWithImagesAsync(): Observable<ProductModel[]> {
     return this._http
@@ -22,11 +24,11 @@ export class ProductService {
   }
   getByIdAsync(key: string): Observable<ProductModel> {
     return this._http
-      .get<ProductModel>(`${this.API}/Products/${key}`)
+      .get<ProductModel>(`${this.API}/product/getbyid/${key}`)
       .pipe(first());
   }
   store(product: ProductModel): Observable<ProductModel> {
-    const url: string = `${this.API}/Products`;
+    const url: string = `${this.API}/product/add`;
     return this._http.post<ProductModel>(url, product);
   }
   storeImages(product: ProductModel, key: string): Observable<any> {
@@ -52,6 +54,6 @@ export class ProductService {
     return this._http.put(`${this.API}/Products/${key}`, product);
   }
   deleteProductAsync(key: string) {
-    return this._http.delete(`${this.API}/Products/${key}`);
+    return this._http.delete(`${this.API}/product/delete/${key}`);
   }
 }

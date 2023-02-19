@@ -5,7 +5,7 @@ import {
   FormGroup,
   FormGroupDirective,
   NgForm,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -73,7 +73,7 @@ export class ProductAddEditComponent implements OnInit {
   ngOnInit(): void {
     this._route.params
       .pipe(
-        map((params: any) => params['key']), //pega o params da requsição
+        map((params: any) => params['id']), //pega o params da requsição
         switchMap((key) => {
           if (!key) {
             return of<ProductModel>(this.product);
@@ -111,8 +111,8 @@ export class ProductAddEditComponent implements OnInit {
     }
   }
   onDelete() {
-    if (!this.product.key) return;
-    const key: string = this.product.key!;
+    if (!this.product.id) return;
+    const key: string = this.product.id!;
 
     this.openDialog('deseja excluir?').subscribe({
       next: (canDelete) => {
@@ -130,23 +130,28 @@ export class ProductAddEditComponent implements OnInit {
       if (element.files) {
         const files: FileList = element.files;
         for (let index = 0; index < files.length; index++) {
-          const image = files[index];
-          console.log(`Image size before compressed: ${image.size} bytes.`);
+          console.log('input change');
+          var file = files[index];
 
-          this.compressImage
-            .compress(image)
-            .pipe(take(1))
-            .subscribe((compressedImage) => {
-              console.log(
-                `Image size after compressed: ${compressedImage.size} bytes.`
-              );
-              // now you can do upload the compressed image
-              this.product.image.push(compressedImage);
-              console.log(this.product.image);
-            });
+          var pattern = /image-*/;
+          var reader = new FileReader();
+
+          if (!file.type.match(pattern)) {
+            alert('invalid format');
+            return;
+          }
+          reader.onload = this._handleReaderLoaded.bind(this);
+          reader.readAsDataURL(file);
         }
       }
     }
+  }
+  _handleReaderLoaded(e: any) {
+    console.log('_handleReaderLoaded');
+    var reader = e.target;
+    const regex = /data:.*base64,/;
+    const string64: string = reader.result.replace(regex, '');
+    this.product.photoString.push(string64);
   }
 
   //#region Metodos Privados
@@ -166,7 +171,7 @@ export class ProductAddEditComponent implements OnInit {
       priceMarket: product.priceMarket,
       note: product.note,
       image: product.images,
-      key: product.key,
+      key: product.id,
     });
   }
   private changeLoadingStatus(state: boolean): void {
@@ -182,8 +187,8 @@ export class ProductAddEditComponent implements OnInit {
       .pipe(
         take(1),
         switchMap((product: ProductModel) => {
-          if (product.key && this.product.image.length > 0) {
-            return this.saveImage(product.key); //se deu certo ele envia as imagens para o servidor
+          if (product.id && this.product.image.length > 0) {
+            return this.saveImage(product.id); //se deu certo ele envia as imagens para o servidor
           }
           return of(product);
         })
@@ -198,7 +203,7 @@ export class ProductAddEditComponent implements OnInit {
       });
   }
   private update() {
-    const key: string = this.product.key!;
+    const key: string = this.product.id!;
     this._productService
       .updateProductAsync(this.product, key) //guarda os dados do cadatro no banco de dados
       .pipe(
