@@ -19,7 +19,7 @@ export class ProductService {
   }
   getAllProductWithImagesAsync(): Observable<ProductModel[]> {
     return this._http
-      .get<ProductModel[]>(`${this.API}/ProductsWithImages`)
+      .get<ProductModel[]>(`${this.API}/product/getall`)
       .pipe(first());
   }
   getByIdAsync(key: string): Observable<ProductModel> {

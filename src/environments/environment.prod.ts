@@ -7,6 +7,6 @@ export const environment = {
     authDomain: 'planar-granite-317805.firebaseapp.com',
     messagingSenderId: '1019728209809',
   },
-  apiUrl: 'https://virtual-store-backend.azurewebsites.net',
+  apiUrl: 'https://virtualstorefunctions.azurewebsites.net',
   production: true,
 };
