@@ -7,8 +7,9 @@ export class ProductModel {
   public note: string = '';
   public inCart: boolean = false;
   public image: File[] = [];
-  public images?: Image[] = undefined;
+  public images: string[] = [];
   public photoString: string[] = [];
+  public photosIds: string[] = [];
   constructor() {}
 }
 interface Image {
