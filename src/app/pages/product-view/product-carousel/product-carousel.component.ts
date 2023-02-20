@@ -23,7 +23,7 @@ export class ProductCarouselComponent implements OnInit {
     if (this.timeoutId) {
       window.clearTimeout(this.timeoutId);
     }
-    this.timeoutId = window.setTimeout(() => this.goToNext(), 3000);
+    //this.timeoutId = window.setTimeout(() => this.goToNext(), 3000);
   }
 
   goToPrevious(): void {

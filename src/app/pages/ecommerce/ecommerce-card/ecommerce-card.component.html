@@ -20,6 +20,7 @@
             class="mdc-card__media"
             src="{{ 'https://virtualstorestorage.blob.core.windows.net/photos/'+ product.photosIds[0] +'.jpg'}}"
             alt="Photo of a Shiba Inu"
+            (click)="goTo(product.id!)"
           />
         </div>
       </mat-card-content>
