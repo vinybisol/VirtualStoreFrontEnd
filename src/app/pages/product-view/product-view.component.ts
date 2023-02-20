@@ -36,10 +36,10 @@ export class ProductViewComponent implements OnInit {
       .subscribe({
         next: (product) => {
           this.product = product;
-          product.images?.forEach((image) => {
+          product.photosIds?.forEach((image) => {
             this.slides.push({
-              url: 'data:image/jpg;base64,' + image.image,
-              title: image.key,
+              url: `https://virtualstorestorage.blob.core.windows.net/photos/${image}.jpg`,
+              title: 'photo',
             });
           });
           this.changeLoadingStatus(false);

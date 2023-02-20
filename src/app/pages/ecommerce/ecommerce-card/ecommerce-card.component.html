@@ -12,14 +12,13 @@
         <div class="div__image">
           <img
             class="mdc-card__sem__media"
-            *ngIf="product.images?.length === 0"
+            *ngIf="product.photosIds?.length === 0"
             src="assets\ecommerce\semimagem.png"
             alt="sem imagem"
           />
           <img
             class="mdc-card__media"
-            *ngFor="let image of product.images"
-            src="{{ 'data:image/jpg;base64,' + image.image }}"
+            src="{{ 'https://virtualstorestorage.blob.core.windows.net/photos/'+ product.photosIds[0] +'.jpg'}}"
             alt="Photo of a Shiba Inu"
           />
         </div>
