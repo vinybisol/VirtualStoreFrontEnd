@@ -1,7 +1,8 @@
-import { CounterReducer } from './counter.reducer';
+import { counterReducer, initialState } from './counter.reducer'
 
 describe('CounterReducer', () => {
   it('should create an instance', () => {
-    expect(new CounterReducer()).toBeTruthy();
-  });
-});
+    expect(initialState).toBeTruthy()
+    expect(counterReducer).toBeTruthy()
+  })
+})

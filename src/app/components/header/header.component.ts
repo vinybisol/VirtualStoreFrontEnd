@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { SideNavToggleInterface } from '../side-nav-toggle-interface';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { SideNavToggleInterface } from '../side-nav-toggle-interface'
 
 @Component({
   selector: 'app-header',
@@ -7,32 +7,31 @@ import { SideNavToggleInterface } from '../side-nav-toggle-interface';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Output() onToggleSideNav: EventEmitter<SideNavToggleInterface> =
-    new EventEmitter();
-  public screenWidth: number = 0;
-  public collapsed: boolean = false;
-  public title = 'Lojinha na Web';
-  private facebookPage: string = 'https://www.facebook.com/akuwer1/';
-  private instagramPage: string = 'https://www.instagram.com/akuwer/';
-  private sharePage: string = 'http://google.com';
-  constructor() {}
+  @Output() toggleSideNav: EventEmitter<SideNavToggleInterface> = new EventEmitter()
+  public screenWidth = 0
+  public collapsed = false
+  public title = 'Lojinha na Web'
+  private facebookPage = 'https://www.facebook.com/akuwer1/'
+  private instagramPage = 'https://www.instagram.com/akuwer/'
+  private sharePage = 'http://google.com'
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void {}
 
   toggleCollapse(): void {
-    this.collapsed = !this.collapsed;
-    this.onToggleSideNav.emit({
+    this.collapsed = !this.collapsed
+    this.toggleSideNav.emit({
       collapsed: this.collapsed,
       screenWidth: this.screenWidth,
-    });
+    })
   }
   gotoShare(): void {
-    window.open(this.sharePage, '_blank');
+    window.open(this.sharePage, '_blank')
   }
   gotoFacebook(): void {
-    window.open(this.facebookPage, '_blank');
+    window.open(this.facebookPage, '_blank')
   }
   gotoInstagran(): void {
-    window.open(this.instagramPage, '_blank');
+    window.open(this.instagramPage, '_blank')
   }
 }

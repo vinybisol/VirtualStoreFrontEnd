@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { ProductCarouselComponent } from './product-carousel.component';
+import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
+import { ProductCarouselComponent } from './product-carousel.component'
 
 @NgModule({
   declarations: [ProductCarouselComponent],

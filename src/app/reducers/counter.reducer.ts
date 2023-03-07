@@ -1,8 +1,8 @@
-import { createReducer, on } from '@ngrx/store';
-import * as fromActions from '../actions/counter';
-import { ProductModel } from '../pages/ecommerce/model/product-model';
+import { createReducer, on } from '@ngrx/store'
+import * as fromActions from '../actions/counter'
+import { ProductModel } from '../pages/ecommerce/model/product-model'
 
-export const initialState: ArticleState = { products: [], message: '' };
+export const initialState: ArticleState = { products: [], message: '' }
 
 export const counterReducer = createReducer(
   initialState,
@@ -10,12 +10,12 @@ export const counterReducer = createReducer(
     products: product,
     message: 'Success',
   }))
-);
+)
 export interface AppState {
-  articleState: ArticleState;
+  articleState: ArticleState
 }
 
 export interface ArticleState {
-  products: ProductModel[];
-  message: any;
+  products: ProductModel[]
+  message: any
 }

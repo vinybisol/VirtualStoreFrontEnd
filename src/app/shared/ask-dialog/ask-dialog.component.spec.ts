@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
-import { AskDialogComponent } from './ask-dialog.component';
+import { AskDialogComponent } from './ask-dialog.component'
 
 describe('AskDialogComponent', () => {
-  let component: AskDialogComponent;
-  let fixture: ComponentFixture<AskDialogComponent>;
+  let component: AskDialogComponent
+  let fixture: ComponentFixture<AskDialogComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,14 +14,14 @@ describe('AskDialogComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: [] },
       ],
       declarations: [AskDialogComponent],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(AskDialogComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AskDialogComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

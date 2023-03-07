@@ -13,9 +13,7 @@
       [errorStateMatcher]="matcher"
       placeholder="Ex. Roteador"
     />
-    <mat-error>
-      Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
-    </mat-error>
+    <mat-error> Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres </mat-error>
   </mat-form-field>
 
   <!-- Nome-->
@@ -29,9 +27,7 @@
       [errorStateMatcher]="matcher"
       placeholder="Ex. Roteador Wireless"
     />
-    <mat-error>
-      Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres
-    </mat-error>
+    <mat-error> Nome é <strong>obrigátorio</strong>, Insira de 3 a 20 caracteres </mat-error>
   </mat-form-field>
 
   <!-- Preço-->
@@ -83,13 +79,7 @@
   <!-- Upload Imagem -->
 
   <div class="upload-container">
-    <button
-      mat-fab
-      color="primary"
-      type="button"
-      mat-raised-button
-      (click)="fileInput.click()"
-    >
+    <button mat-fab color="primary" type="button" mat-raised-button (click)="fileInput.click()">
       <mat-icon>arrow_upward</mat-icon>
     </button>
     <mat-label> Upload imagen</mat-label>
@@ -131,13 +121,7 @@
     <mat-icon>save</mat-icon>
   </button>
   <br />
-  <button
-    mat-fab
-    color="primary"
-    class="button"
-    (click)="goBack()"
-    aria-label="add button"
-  >
+  <button mat-fab color="primary" class="button" (click)="goBack()" aria-label="add button">
     <mat-icon>clear</mat-icon>
   </button>
 </div>

@@ -1,24 +1,24 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { EcommerceHeaderComponent } from './ecommerce-header.component';
+import { EcommerceHeaderComponent } from './ecommerce-header.component'
 
 describe('EcommerceHeaderComponent', () => {
-  let component: EcommerceHeaderComponent;
-  let fixture: ComponentFixture<EcommerceHeaderComponent>;
+  let component: EcommerceHeaderComponent
+  let fixture: ComponentFixture<EcommerceHeaderComponent>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [EcommerceHeaderComponent],
       imports: [HttpClientTestingModule],
-    }).compileComponents();
+    }).compileComponents()
 
-    fixture = TestBed.createComponent(EcommerceHeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(EcommerceHeaderComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

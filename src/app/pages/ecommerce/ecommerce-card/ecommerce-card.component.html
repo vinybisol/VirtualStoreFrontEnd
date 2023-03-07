@@ -3,9 +3,7 @@
 <div *ngIf="count$ | async as products">
   <div class="card-box">
     <mat-card class="card" *ngFor="let product of products.products">
-      <mat-card-title class="card-title">{{
-        product.shortName
-      }}</mat-card-title>
+      <mat-card-title class="card-title">{{ product.shortName }}</mat-card-title>
       <mat-card-subtitle>{{ product.name }}</mat-card-subtitle>
 
       <mat-card-content>
@@ -18,7 +16,11 @@
           />
           <img
             class="mdc-card__media"
-            src="{{ 'https://virtualstorestorage.blob.core.windows.net/photos/'+ product.photosIds[0] +'.jpg'}}"
+            src="{{
+              'https://virtualstorestorage.blob.core.windows.net/photos/' +
+                product.photosIds[0] +
+                '.jpg'
+            }}"
             alt="Photo of a Shiba Inu"
             (click)="goTo(product.id!)"
           />
@@ -26,11 +28,11 @@
       </mat-card-content>
 
       <mat-card-title>
-        {{ product.price | currency : "BRL" }}
+        {{ product.price | currency : 'BRL' }}
       </mat-card-title>
 
       <mat-card-subtitle>
-        {{ product.priceMarket | currency : "BRL" }}
+        {{ product.priceMarket | currency : 'BRL' }}
         <small>valor de mercado</small>
       </mat-card-subtitle>
 

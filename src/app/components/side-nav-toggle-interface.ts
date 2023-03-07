@@ -1,4 +1,4 @@
 export interface SideNavToggleInterface {
-  screenWidth: number;
-  collapsed: boolean;
+  screenWidth: number
+  collapsed: boolean
 }

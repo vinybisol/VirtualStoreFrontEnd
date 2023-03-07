@@ -14,4 +14,4 @@ export const menuNavbarData = [
     icon: 'fal fa-box-open',
     label: 'Counter',
   },
-];
+]

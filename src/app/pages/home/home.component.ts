@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-home',
@@ -9,9 +9,10 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   constructor(private readonly _router: Router) {}
 
+  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void {}
 
   irPara() {
-    this._router.navigate(['ecommerce']);
+    this._router.navigate(['ecommerce'])
   }
 }

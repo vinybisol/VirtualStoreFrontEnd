@@ -1,4 +1,4 @@
 export interface ProductCarouselInterface {
-  url: string;
-  title: string;
+  url: string
+  title: string
 }

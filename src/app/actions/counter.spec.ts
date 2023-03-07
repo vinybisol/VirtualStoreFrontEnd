@@ -1,7 +1,8 @@
-import { Counter } from './counter';
+import { getAllProducts, getAllProductsSuccess } from './counter'
 
 describe('Counter', () => {
   it('should create an instance', () => {
-    expect(new Counter()).toBeTruthy();
-  });
-});
+    expect(getAllProducts).toBeTruthy()
+    expect(getAllProductsSuccess).toBeTruthy()
+  })
+})

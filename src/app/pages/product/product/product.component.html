@@ -1,8 +1,5 @@
 <div *ngIf="products$ | async as product; else loading">
-  <app-product-list
-    [products]="product"
-    (outputProduct)="onEdit($event)"
-  ></app-product-list>
+  <app-product-list [products]="product" (outputProduct)="onEdit($event)"></app-product-list>
 </div>
 
 <!--Loading-->

@@ -9,4 +9,4 @@ export const environment = {
   },
   apiUrl: 'https://virtualstorefunctions.azurewebsites.net',
   production: true,
-};
+}
