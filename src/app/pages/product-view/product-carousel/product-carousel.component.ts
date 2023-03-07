@@ -46,6 +46,7 @@ export class ProductCarouselComponent implements OnInit, OnDestroy {
   }
 
   getCurrentSlideUrl() {
-    return "url('${this.slides[this.currentIndex].url}')"
+    if (this.slides.length > 0) return `url('${this.slides[this.currentIndex].url}')`
+    return ''
   }
 }
