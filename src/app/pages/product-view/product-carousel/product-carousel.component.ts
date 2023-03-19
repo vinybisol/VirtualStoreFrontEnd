@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core'
+import { stringLength } from '@firebase/util'
 import { ProductCarouselInterface } from './types/product-carousel.interface'
 
 @Component({
@@ -10,6 +11,7 @@ export class ProductCarouselComponent implements OnInit, OnDestroy {
   @Input() slides: ProductCarouselInterface[] = []
   currentIndex = 0
   timeoutId?: number
+  imgSrc = ''
   ngOnInit(): void {
     this.resetTimer()
   }
@@ -48,5 +50,12 @@ export class ProductCarouselComponent implements OnInit, OnDestroy {
   getCurrentSlideUrl() {
     if (this.slides.length > 0) return `url('${this.slides[this.currentIndex].url}')`
     return ''
+  }
+
+  opemImage(): void {
+    this.imgSrc = `${this.slides[this.currentIndex].url}`
+  }
+  closeModal(): void {
+    this.imgSrc = ''
   }
 }

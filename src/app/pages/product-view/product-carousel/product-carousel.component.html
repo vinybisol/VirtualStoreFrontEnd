@@ -3,7 +3,7 @@
     <div (click)="goToPrevious()" class="leftArrow">❰</div>
     <div (click)="goToNext()" class="rightArrow">❱</div>
   </div>
-  <div class="slide" [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"></div>
+  <div class="slide" style="max-width:100%;cursor:pointer" (click)="opemImage()" data-toggle="modal" data-target="#myModal" [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"></div>
   <div class="dotsContainer">
     <div
       *ngFor="let slide of slides; let slideIndex = index"
@@ -14,3 +14,19 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+
+<div *ngIf="imgSrc" (click)="closeModal()" id="myModal" class="modal">
+  <button mat-fab color="primary" class="button" (click)="closeModal()" aria-label="add button">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <img
+  src="{{imgSrc}}"
+  style="max-width:100%;cursor:pointer"
+  class="modal-content"
+/>
+  <div id="caption"></div>
+</div>
+
+
