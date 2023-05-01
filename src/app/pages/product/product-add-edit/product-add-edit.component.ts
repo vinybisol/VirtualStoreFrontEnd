@@ -40,8 +40,8 @@ export class ProductAddEditComponent implements OnInit {
     private readonly compressImage: ImageCompressService
   ) {
     this.form = this._formBuilder.group({
-      shortName: [null, [Validators.required, Validators.maxLength(20), Validators.minLength(3)]],
-      name: [null, [Validators.required, Validators.maxLength(20), Validators.minLength(3)]],
+      shortName: [null, [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      name: [null, [Validators.required, Validators.maxLength(100), Validators.minLength(3)]],
 
       price: [null, [Validators.required, Validators.pattern('(^\\d*.?\\d{0,2}$)')]],
       priceMarket: [
